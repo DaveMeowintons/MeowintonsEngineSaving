@@ -28,4 +28,8 @@ public abstract class ECSystem {
         for(ComponentSorter cs: componentSorters)
             cs.remove(e);
     }
+
+    /**Getters**/
+
+    public ComponentSorter[] getComponentSorters(){ return componentSorters; }
 }

@@ -69,7 +69,7 @@ public class Entity {
         builder.append("Entity[").append(id).append("]{\n");
         builder.append("  Components(").append(components.size()).append("){").append("\n");
         for(Component c : components.values())
-            builder.append("    ").append(c.getClass().getSimpleName()).append("\n");
+            builder.append("    ").append(c.getClass().getSimpleName()).append(", ID: ").append(c.getID()).append("\n");
         builder.append("  }\n").append("}");
 
         return builder.toString();

@@ -44,5 +44,8 @@ public class ComponentSorter {
 
     public void remove(Entity e){ this.entities.remove(e); }
 
+    /**Getters**/
+
     public List<Entity> getEntities(){ return entities; }
+    public Class<? extends Component>[] getIncludedComponents(){ return include; }
 }

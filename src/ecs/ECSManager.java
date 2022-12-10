@@ -1,8 +1,10 @@
 package ecs;
 
-import _main.TestComponent;
 import ecs.components.Component;
+import ecs.systems.ComponentSorter;
 import ecs.systems.ECSystem;
+import utils.logging.LogLevel;
+import utils.logging.Logger;
 
 import java.util.*;
 import java.util.List;
@@ -27,7 +29,14 @@ public class ECSManager {
 
     public ECSManager() { entityID = 0; }
 
-    public void addSystem(ECSystem... systems){ Collections.addAll(this.systems, systems); }
+    public void addSystem(ECSystem... systems){
+        for(ECSystem system : systems){
+            for(ComponentSorter cs : system.getComponentSorters())
+                loadComponents(cs.getIncludedComponents());
+
+            this.systems.add(system);
+        }
+    }
 
     /**Entities**/
     public Entity createEntity(Component... components){
@@ -49,20 +58,67 @@ public class ECSManager {
     public void removeComponent(Entity e, Component... components){ componentsToRemove.put(e, components); }
 
     /**Components**/
-    public void loadComponent(Class<? extends Component> component){ components.add(component); }
-    public List<Component> validateComponents(List<Component> componentsToValidate){
-        ArrayList<Component> returnComponents = new ArrayList<>();
-        for(Component c : componentsToValidate)
-            if(components.contains(c.getClass())) returnComponents.add(c);
 
-        return returnComponents;
+    /**
+     * Load component classes into local array of used components
+     * @param components Component classes
+     */
+    @SafeVarargs
+    private void loadComponents(Class<? extends Component>... components){
+        for(Class<? extends Component> c : components)
+            loadComponent(c);
     }
+
+    /**
+     * Load component class into local array of used components
+     * @param component Component class
+     */
+    private void loadComponent(Class<? extends Component> component){
+        if(components.contains(component)) return;  //Component already loaded into list so ignore
+
+        components.add(component);
+    }
+
+    /**
+     * Validate if component is added to ECS and then if found assign it the correct ID
+     * Ignores any component that ECS isn't set to support
+     * @param componentsToValidate List of components
+     * @return Array of validated components
+     */
+    public List<Component> validateComponents(List<Component> componentsToValidate){
+        return validateComponents(listToArray(componentsToValidate));
+    }
+
+    /**
+     * Validate if component is added to ECS and then if found assign it the correct ID
+     * Ignores any component that ECS isn't set to support
+     * @param componentsToValidate List of components
+     * @return Array of validated components
+     */
     public List<Component> validateComponents(Component... componentsToValidate){
         ArrayList<Component> returnComponents = new ArrayList<>();
         for(Component c : componentsToValidate)
-            if(components.contains(c.getClass())) returnComponents.add(c);
+            if(components.contains(c.getClass())){
+                c.setID(components.indexOf(c.getClass()));
+                returnComponents.add(c);
+            }else{
+                Logger.log(LogLevel.WARNING, getClass().getSimpleName(), "Component [" + c.getClass().getSimpleName() + "] not in use");
+            }
 
         return returnComponents;
+    }
+
+    /**
+     * Converts a List of components to an array of components
+     * @param components List object of components
+     * @return array of components
+     */
+    private Component[] listToArray(List<Component> components){
+        Component[] array = new Component[components.size()];
+        for(int i = 0; i < array.length; i++)
+            array[i] = components.get(i);
+
+        return array;
     }
 
     public void update(float interval){
@@ -99,14 +155,20 @@ public class ECSManager {
         entitiesToValidate.clear();
     }
 
+    /**
+     * Memory clean of ECS
+     */
     public void destroy(){
         entitiesToRemove.addAll(entities);
+        components.clear();
+        //Ensures all working lists are cleared
         update(0);
     }
 
     /**Getters**/
 
-    public List<ECSystem> getSystems(){ return systems; }
-    public List<Entity> getEntities(){ return entities; }
+    public List<ECSystem>                   getSystems()   { return systems;    }
+    public List<Entity>                     getEntities()  { return entities;   }
+    public List<Class<? extends Component>> getComponents(){ return components; }
 
 }

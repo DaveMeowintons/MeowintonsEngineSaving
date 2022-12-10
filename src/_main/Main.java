@@ -2,23 +2,27 @@ package _main;
 
 import ecs.ECSManager;
 import ecs.Entity;
+import utils.logging.LogLevel;
+import utils.logging.Logger;
 
 public class Main {
 
     public static void main(String[] args){
-        System.out.println("The boars are in the pantry");
+        Logger.log(LogLevel.DEBUG, Main.class.getSimpleName(), "The boars are in the pantry");
 
         //Init
         ECSManager testManager = new ECSManager();
-        testManager.loadComponent(TestComponent.class);
-        testManager.createEntity(new TestComponent());
+        testManager.addSystem(new TestSystem());
+        testManager.createEntity(new TestComponent(), new AnotherComponent());
 
         //Update
         testManager.update(0);
 
         for(Entity e : testManager.getEntities())
-            System.out.println(e);
+            Logger.log(LogLevel.DEBUG, Main.class.getSimpleName(), e);
 
+        //Clean up
+        testManager.destroy();
     }
 
 }
