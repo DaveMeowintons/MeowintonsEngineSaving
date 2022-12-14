@@ -21,7 +21,7 @@ public class TSDatabase extends TSBase {
     private short objectCount;          //Amount of items in "objects" map stored as a short
     private final Map<String, TSObject> objects = new HashMap<>();
 
-    public TSDatabase(){
+    private TSDatabase(){
         size += header.length                          +    //HEADER
                 TSDataType.getSize(TSDataType.SHORT)   +    //VERSION
                 TSDataType.getSize(TSDataType.SHORT);       //objectCount
@@ -127,7 +127,7 @@ public class TSDatabase extends TSBase {
      * Add a TSObject into the local TSObject array
      * @param object TSObject to add
      */
-    public void addObject(TSObject object){ this.objects.put(object.getName(), object); this.objectCount = (short)this.objects.size(); this.size += object.getSize(); }
+    public void add(TSObject object){ this.objects.put(object.getName(), object); this.objectCount = (short)this.objects.size(); this.size += object.getSize(); }
 
     /**
      * Find a specified TSObject from the Mapped TSObject list

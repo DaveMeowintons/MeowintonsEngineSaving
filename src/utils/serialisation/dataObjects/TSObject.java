@@ -130,17 +130,17 @@ public class TSObject extends TSBase {
      * Add a TSObject into the local TSObject array
      * @param object TSObject to add
      */
-    public void addObject(TSObject object){ this.objects.put(object.getName(), object); this.objectCount = (short)this.objects.size(); this.size += object.size; }
+    public void add(TSObject object){ this.objects.put(object.getName(), object); this.objectCount = (short)this.objects.size(); this.size += object.size; }
     /**
      * Add a TSField into the local TSField array
      * @param field TSField to add
      */
-    public void addField (TSField  field) { this.fields .put(field.getName(), field ); this.fieldCount  = (short)this.fields .size(); this.size += field .size; }
+    public void add (TSField  field){ this.fields .put(field.getName(), field ); this.fieldCount  = (short)this.fields .size(); this.size += field .size; }
     /**
      * Add a TSArray into the local TSArray array
      * @param array TSArray to add
      */
-    public void addArray (TSArray  array) { this.arrays .put(array.getName(), array ); this.arrayCount  = (short)this.arrays .size(); this.size += array .size; }
+    public void add (TSArray  array){ this.arrays .put(array.getName(), array ); this.arrayCount  = (short)this.arrays .size(); this.size += array .size; }
 
     /**
      * Find a specified TSObject from the Mapped TSObject list
