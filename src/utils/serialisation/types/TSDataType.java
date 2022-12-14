@@ -1,6 +1,6 @@
 package utils.serialisation.types;
 
-import utils.files.readers.DatabaseReader;
+import utils.files.readers.TSReader;
 
 public class TSDataType {
     public static final byte UNKNOWN = 0;
@@ -42,15 +42,15 @@ public class TSDataType {
     @SuppressWarnings("unchecked")
     public static <T> T value(byte type, byte[] data){
         switch(type){
-            case BYTE:    return (T)(Byte)     DatabaseReader.readByte(data, 0);
-            case SHORT:   return (T)(Short)    DatabaseReader.readShort(data, 0);
-            case INTEGER: return (T)(Integer)  DatabaseReader.readInt(data, 0);
-            case LONG:    return (T)(Long)     DatabaseReader.readLong(data, 0);
-            case FLOAT:   return (T)(Float)    DatabaseReader.readFloat(data, 0);
-            case DOUBLE:  return (T)(Double)   DatabaseReader.readDouble(data, 0);
-            case BOOLEAN: return (T)(Boolean)  DatabaseReader.readBoolean(data, 0);
-            case CHAR:    return (T)(Character)DatabaseReader.readChar(data, 0);
-            case STRING:  return (T)(String)   DatabaseReader.readString(data, 0);
+            case BYTE:    return (T)(Byte)     TSReader.readByte(data, 0);
+            case SHORT:   return (T)(Short)    TSReader.readShort(data, 0);
+            case INTEGER: return (T)(Integer)  TSReader.readInt(data, 0);
+            case LONG:    return (T)(Long)     TSReader.readLong(data, 0);
+            case FLOAT:   return (T)(Float)    TSReader.readFloat(data, 0);
+            case DOUBLE:  return (T)(Double)   TSReader.readDouble(data, 0);
+            case BOOLEAN: return (T)(Boolean)  TSReader.readBoolean(data, 0);
+            case CHAR:    return (T)(Character) TSReader.readChar(data, 0);
+            case STRING:  return (T)(String)   TSReader.readString(data, 0);
         }
 
         return null;

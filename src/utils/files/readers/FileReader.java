@@ -22,7 +22,7 @@ public abstract class FileReader {
     public abstract void open(Loader loader, File file);
 
     /**
-     * Closes file and clear memory
+     * Closes file and clears memory
      */
     public abstract void close();
 

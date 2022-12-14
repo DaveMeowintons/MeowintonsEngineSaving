@@ -5,8 +5,8 @@ public enum LogLevel {
     WARNING (2, "WARNING"),
     ERROR   (3, "ERROR");
 
-    public int id;
-    public String name;
+    public final int id;
+    public final String name;
 
     LogLevel(int id, String name){
         this.id = id;
