@@ -2,7 +2,10 @@ package utils.files.writers;
 
 import utils.logging.LogLevel;
 import utils.logging.Logger;
+import utils.serialisation.dataObjects.TSArray;
 import utils.serialisation.dataObjects.TSDatabase;
+import utils.serialisation.dataObjects.TSField;
+import utils.serialisation.dataObjects.TSObject;
 import utils.serialisation.types.TSDataType;
 
 import java.io.BufferedOutputStream;
@@ -26,17 +29,113 @@ public class TSWriter extends FileWriter {
         }
     }
 
-    public void writeDatabase(TSDatabase database){
-        byte[] data = new byte[database.getSize()];
-        database.getBytes(data, 0);
-
+    public void writeDatabaseToFile(TSDatabase database){
         try{
-            stream.write(data);
+            stream.write(writeDatabase(database));
         }catch(Exception error){
             Logger.log(LogLevel.ERROR, getClass().getSimpleName(), "Error writing data to file: " + this.fileName);
             Logger.log(LogLevel.ERROR, getClass().getSimpleName(), error);
             close();
         }
+    }
+
+    /**
+     * Convert database into serialised byte array
+     * @param database Database class
+     * @return byte array
+     */
+    private byte[] writeDatabase(TSDatabase database){
+        byte[] data = new byte[database.getSize()];
+        int pointer = 0;
+
+        pointer = writeBytes(data, pointer, database.getHeader());
+        pointer = writeBytes(data, pointer, database.getVersion());
+        pointer = writeBytes(data, pointer, TSDatabase.CONTAINER_TYPE);
+        pointer = writeBytes(data, pointer, database.getNameLength());
+        pointer = writeBytes(data, pointer, database.getName());
+        pointer = writeBytes(data, pointer, database.getSize());
+
+        pointer = writeBytes(data, pointer, database.getObjectCount());
+        for(TSObject object : database.getObjects().values())
+            pointer = writeObject(data, pointer, object);
+
+        return data;
+    }
+
+    /**
+     * Write database object into byte array
+     * @param data byte array
+     * @param pointer byte array pointer
+     * @param object object to write into byte array
+     * @return pointer value
+     */
+    private int writeObject(byte[] data, int pointer, TSObject object){
+        pointer = writeBytes(data, pointer, TSObject.CONTAINER_TYPE);
+        pointer = writeBytes(data, pointer, object.getNameLength());
+        pointer = writeBytes(data, pointer, object.getName());
+        pointer = writeBytes(data, pointer, object.getSize());
+
+        pointer = writeBytes(data, pointer, object.getObjectCount());
+        for(TSObject obj : object.getObjects().values())
+            pointer = writeObject(data, pointer, obj);
+
+        pointer = writeBytes(data, pointer, object.getFieldCount());
+        for(TSField field : object.getFields().values())
+            pointer = writeField(data, pointer, field);
+
+        pointer = writeBytes(data, pointer, object.getArrayCount());
+        for(TSArray array : object.getArrays().values())
+            pointer = writeArray(data, pointer, array);
+
+        return pointer;
+    }
+
+    /**
+     * Write database field into byte array
+     * @param data byte array
+     * @param pointer byte array pointer
+     * @param field field to write into byte array
+     * @return pointer value
+     */
+    private int writeField(byte[] data, int pointer, TSField field){
+        pointer = writeBytes(data, pointer, TSField.CONTAINER_TYPE);
+        pointer = writeBytes(data, pointer, field.getNameLength());
+        pointer = writeBytes(data, pointer, field.getName());
+        pointer = writeBytes(data, pointer, field.getSize());
+        pointer = writeBytes(data, pointer, field.getDataType());
+        pointer = writeBytes(data, pointer, field.getData());
+
+        return pointer;
+    }
+
+    /**
+     * Write database array into byte array
+     * @param data byte array
+     * @param pointer byte array pointer
+     * @param array array to write into byte array
+     * @return array pointer
+     */
+    private int writeArray(byte[] data, int pointer, TSArray array){
+        pointer = writeBytes(data, pointer, TSArray.CONTAINER_TYPE);
+        pointer = writeBytes(data, pointer, array.getNameLength());
+        pointer = writeBytes(data, pointer, array.getName());
+        pointer = writeBytes(data, pointer, array.getSize());
+        pointer = writeBytes(data, pointer, array.getDataType());
+        pointer = writeBytes(data, pointer, array.getDataCount());
+
+        switch(array.getDataType()){
+            case TSDataType.BYTE:       pointer = writeBytes(data, pointer, array.getByteData());       break;
+            case TSDataType.SHORT:      pointer = writeBytes(data, pointer, array.getShortData());      break;
+            case TSDataType.INTEGER:    pointer = writeBytes(data, pointer, array.getIntData());        break;
+            case TSDataType.LONG:       pointer = writeBytes(data, pointer, array.getLongData());       break;
+            case TSDataType.FLOAT:      pointer = writeBytes(data, pointer, array.getFloatData());      break;
+            case TSDataType.DOUBLE:     pointer = writeBytes(data, pointer, array.getDoubleData());     break;
+            case TSDataType.BOOLEAN:    pointer = writeBytes(data, pointer, array.getBooleanData());    break;
+            case TSDataType.CHAR:       pointer = writeBytes(data, pointer, array.getCharData());       break;
+            case TSDataType.STRING:     pointer = writeBytes(data, pointer, array.getStringData());     break;
+        }
+
+        return pointer;
     }
 
     public void close(){

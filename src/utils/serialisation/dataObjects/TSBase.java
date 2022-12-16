@@ -12,14 +12,6 @@ public abstract class TSBase {
                                 TSDataType.getSize(TSDataType.INTEGER)     //size
                             );
 
-    /**
-     * Store field data into byte array
-     * @param dest destination byte array
-     * @param pointer int pointer in byte array
-     * @return pointer
-     */
-    protected abstract int getBytes(byte[] dest, int pointer);
-
     /**Getters**/
 
     public short getNameLength(){ return nameLength; }

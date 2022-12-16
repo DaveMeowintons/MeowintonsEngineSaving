@@ -38,24 +38,6 @@ public class TSObject extends TSBase {
         return object;
     }
 
-    public int getBytes(byte[] dest, int pointer){
-        pointer = TSWriter.writeBytes(dest, pointer, CONTAINER_TYPE);
-        pointer = TSWriter.writeBytes(dest, pointer, nameLength);
-        pointer = TSWriter.writeBytes(dest, pointer, name);
-        pointer = TSWriter.writeBytes(dest, pointer, size);
-
-        pointer = TSWriter.writeBytes(dest, pointer, objectCount);
-        for(TSObject object : objects.values()) pointer = object.getBytes(dest, pointer);
-
-        pointer = TSWriter.writeBytes(dest, pointer, fieldCount);
-        for(TSField field : fields.values()) pointer = field.getBytes(dest, pointer);
-
-        pointer = TSWriter.writeBytes(dest, pointer, arrayCount);
-        for(TSArray array : arrays.values()) pointer = array.getBytes(dest, pointer);
-
-        return pointer;
-    }
-
     /**
      * Load a new TSObject from raw byte data
      * @param data raw byte array data

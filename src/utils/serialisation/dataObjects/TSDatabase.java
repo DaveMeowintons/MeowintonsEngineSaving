@@ -38,20 +38,6 @@ public class TSDatabase extends TSBase {
         return database;
     }
 
-    public int getBytes(byte[] dest, int pointer){
-        pointer = TSWriter.writeBytes(dest, pointer, header);
-        pointer = TSWriter.writeBytes(dest, pointer, version);
-        pointer = TSWriter.writeBytes(dest, pointer, CONTAINER_TYPE);
-        pointer = TSWriter.writeBytes(dest, pointer, nameLength);
-        pointer = TSWriter.writeBytes(dest, pointer, name);
-        pointer = TSWriter.writeBytes(dest, pointer, size);
-
-        pointer = TSWriter.writeBytes(dest, pointer, objectCount);
-        for(TSObject object : objects.values()) pointer = object.getBytes(dest, pointer);
-
-        return pointer;
-    }
-
     /**
      * Load a new TSDatabase from raw byte data
      * @param data raw byte array data

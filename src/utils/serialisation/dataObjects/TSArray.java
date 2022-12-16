@@ -173,30 +173,6 @@ public class TSArray extends TSBase {
         return array;
     }
 
-
-    public int getBytes(byte[] dest, int pointer){
-        pointer = TSWriter.writeBytes(dest, pointer, CONTAINER_TYPE);
-        pointer = TSWriter.writeBytes(dest, pointer, nameLength);
-        pointer = TSWriter.writeBytes(dest, pointer, name);
-        pointer = TSWriter.writeBytes(dest, pointer, size);
-        pointer = TSWriter.writeBytes(dest, pointer, dataType);
-        pointer = TSWriter.writeBytes(dest, pointer, dataCount);
-
-        switch(dataType){
-            case TSDataType.BYTE:       pointer = TSWriter.writeBytes(dest, pointer, byteData);       break;
-            case TSDataType.SHORT:      pointer = TSWriter.writeBytes(dest, pointer, shortData);      break;
-            case TSDataType.INTEGER:    pointer = TSWriter.writeBytes(dest, pointer, intData);        break;
-            case TSDataType.LONG:       pointer = TSWriter.writeBytes(dest, pointer, longData);       break;
-            case TSDataType.FLOAT:      pointer = TSWriter.writeBytes(dest, pointer, floatData);      break;
-            case TSDataType.DOUBLE:     pointer = TSWriter.writeBytes(dest, pointer, doubleData);     break;
-            case TSDataType.BOOLEAN:    pointer = TSWriter.writeBytes(dest, pointer, booleanData);    break;
-            case TSDataType.CHAR:       pointer = TSWriter.writeBytes(dest, pointer, charData);       break;
-            case TSDataType.STRING:     pointer = TSWriter.writeBytes(dest, pointer, stringData);     break;
-        }
-
-        return pointer;
-    }
-
     /**
      * @return How large in bytes the data size is
      */

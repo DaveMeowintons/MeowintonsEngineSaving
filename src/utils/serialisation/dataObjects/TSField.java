@@ -161,17 +161,6 @@ public class TSField extends TSBase {
         return field;
     }
 
-    public int getBytes(byte[] dest, int pointer){
-        pointer = TSWriter.writeBytes(dest, pointer, CONTAINER_TYPE);
-        pointer = TSWriter.writeBytes(dest, pointer, nameLength);
-        pointer = TSWriter.writeBytes(dest, pointer, name);
-        pointer = TSWriter.writeBytes(dest, pointer, size);
-        pointer = TSWriter.writeBytes(dest, pointer, dataType);
-        pointer = TSWriter.writeBytes(dest, pointer, data);
-
-        return pointer;
-    }
-
     /**
      * Load a new TSField from raw byte data
      * @param data raw byte array data
