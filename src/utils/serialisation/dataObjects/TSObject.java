@@ -1,7 +1,6 @@
 package utils.serialisation.dataObjects;
 
 import utils.files.readers.TSReader;
-import utils.files.writers.TSWriter;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
 import utils.serialisation.types.TSContainerType;
