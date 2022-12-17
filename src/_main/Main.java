@@ -27,7 +27,7 @@ public class Main {
         object.add(field);
         database.add(object);
 
-        String dir = System.getProperty("user.home") + "\\Documents\\BovrilBeggars";
+        String dir = System.getProperty("user.home") + "/Documents/BovrilBeggars";
         File base = new File(dir);
         if(!base.exists())
             if(base.mkdir()) Logger.log(LogLevel.DEBUG, Main.class.getSimpleName(), "Created Bovril Beggars folder within Documents");
