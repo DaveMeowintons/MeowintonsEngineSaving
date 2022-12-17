@@ -34,12 +34,12 @@ public class Main {
             else Logger.log(LogLevel.WARNING, Main.class.getSimpleName(), "Couldn't create Bovril Beggars folder in Documents");
 
         TSWriter writer = new TSWriter();
-        writer.createFile(dir + "\\Example.tsd");
+        writer.createFile(dir + "/Example.tsd");
         writer.writeDatabaseToFile(database);
         writer.close();
 
         TSReader reader = new TSReader();
-        reader.open(loader, dir + "\\Example.tsd");
+        reader.open(loader, dir + "/Example.tsd");
         TSDatabase loaded = TSDatabase.deserialise(reader.getData());
         reader.close();
         System.out.println(loaded);
