@@ -58,7 +58,7 @@ public class TSDatabase extends TSBase {
                         );
             return null;
         }
-        pointer += header.length;
+        pointer += TSWriter.HEADER.length;
 
         short version = TSReader.readShort(data, pointer);
         pointer += TSDataType.getSize(TSDataType.SHORT);

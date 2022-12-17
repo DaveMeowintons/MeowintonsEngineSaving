@@ -11,6 +11,8 @@ import utils.serialisation.dataObjects.TSDatabase;
 import utils.serialisation.dataObjects.TSField;
 import utils.serialisation.dataObjects.TSObject;
 
+import java.io.File;
+
 public class Main {
 
     public static void main(String[] args){
@@ -18,6 +20,29 @@ public class Main {
 
         //Init
         Loader loader = new Loader();
+
+        TSDatabase database = TSDatabase.Create("Database");
+        TSObject object = TSObject.Create("Example");
+        TSField  field  = TSField.Integer("Example Variable", 12);
+        object.add(field);
+        database.add(object);
+
+        String dir = System.getProperty("user.home") + "\\Documents\\BovrilBeggars";
+        File base = new File(dir);
+        if(!base.exists())
+            if(base.mkdir()) Logger.log(LogLevel.DEBUG, Main.class.getSimpleName(), "Created Bovril Beggars folder within Documents");
+            else Logger.log(LogLevel.WARNING, Main.class.getSimpleName(), "Couldn't create Bovril Beggars folder in Documents");
+
+        TSWriter writer = new TSWriter();
+        writer.createFile(dir + "\\Example.tsd");
+        writer.writeDatabaseToFile(database);
+        writer.close();
+
+        TSReader reader = new TSReader();
+        reader.open(loader, dir + "\\Example.tsd");
+        TSDatabase loaded = TSDatabase.deserialise(reader.getData());
+        reader.close();
+        System.out.println(loaded);
 
         ECSManager testManager = new ECSManager();
         testManager.addSystem(new TestSystem());

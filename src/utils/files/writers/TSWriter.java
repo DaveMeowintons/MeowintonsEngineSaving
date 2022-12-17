@@ -10,6 +10,7 @@ import utils.serialisation.types.TSDataType;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 
 public class TSWriter extends FileWriter {
     public static final byte[] HEADER  = "TSDB".getBytes();
@@ -52,7 +53,7 @@ public class TSWriter extends FileWriter {
         pointer = writeBytes(data, pointer, database.getVersion());
         pointer = writeBytes(data, pointer, TSDatabase.CONTAINER_TYPE);
         pointer = writeBytes(data, pointer, database.getNameLength());
-        pointer = writeBytes(data, pointer, database.getName());
+        pointer = writeBytes(data, pointer, database.getNameData());
         pointer = writeBytes(data, pointer, database.getSize());
 
         pointer = writeBytes(data, pointer, database.getObjectCount());
@@ -72,7 +73,7 @@ public class TSWriter extends FileWriter {
     private int writeObject(byte[] data, int pointer, TSObject object){
         pointer = writeBytes(data, pointer, TSObject.CONTAINER_TYPE);
         pointer = writeBytes(data, pointer, object.getNameLength());
-        pointer = writeBytes(data, pointer, object.getName());
+        pointer = writeBytes(data, pointer, object.getNameData());
         pointer = writeBytes(data, pointer, object.getSize());
 
         pointer = writeBytes(data, pointer, object.getObjectCount());
@@ -100,7 +101,7 @@ public class TSWriter extends FileWriter {
     private int writeField(byte[] data, int pointer, TSField field){
         pointer = writeBytes(data, pointer, TSField.CONTAINER_TYPE);
         pointer = writeBytes(data, pointer, field.getNameLength());
-        pointer = writeBytes(data, pointer, field.getName());
+        pointer = writeBytes(data, pointer, field.getNameData());
         pointer = writeBytes(data, pointer, field.getSize());
         pointer = writeBytes(data, pointer, field.getDataType());
         pointer = writeBytes(data, pointer, field.getData());
@@ -118,7 +119,7 @@ public class TSWriter extends FileWriter {
     private int writeArray(byte[] data, int pointer, TSArray array){
         pointer = writeBytes(data, pointer, TSArray.CONTAINER_TYPE);
         pointer = writeBytes(data, pointer, array.getNameLength());
-        pointer = writeBytes(data, pointer, array.getName());
+        pointer = writeBytes(data, pointer, array.getNameData());
         pointer = writeBytes(data, pointer, array.getSize());
         pointer = writeBytes(data, pointer, array.getDataType());
         pointer = writeBytes(data, pointer, array.getDataCount());
@@ -364,7 +365,6 @@ public class TSWriter extends FileWriter {
         char[] chars = new char[value.length()];
         for (int i = 0; i < value.length(); i++) chars[i] = value.charAt(i);
 
-        pointer = writeBytes(dest, pointer, (short)(TSDataType.getSize(TSDataType.BYTE) * value.length()));
         return writeBytes(dest, pointer, chars);
     }
 

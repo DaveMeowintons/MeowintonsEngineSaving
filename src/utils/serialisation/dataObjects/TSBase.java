@@ -16,6 +16,8 @@ public abstract class TSBase {
 
     public short getNameLength(){ return nameLength; }
     public String getName(){ return new String(name, 0, nameLength); }
+    public byte[] getNameData(){ return name; }
+
 
     public int getSize(){ return size; }
 
