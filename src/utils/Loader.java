@@ -91,18 +91,6 @@ public class Loader {
                             ReflectionTools.setField(obj, f, array.getDataObject());
                         }
                     }
-
-
-                    for(TSField field : component.getFields().values()){
-                        if(field.getName().equals("ID")) continue;
-
-                        switch(field.getDataType()){
-                            case TSDataType.BYTE:
-                                break;
-                            case TSDataType.SHORT:
-                                break;
-                        }
-                    }
                 }
 
                 manager.loadEntity(new Entity(entityID, components));
