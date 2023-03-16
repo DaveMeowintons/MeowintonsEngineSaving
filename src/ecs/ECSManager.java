@@ -172,6 +172,8 @@ public class ECSManager {
         entitiesToRemove.addAll(entities);
         //Ensures all working lists are cleared
         update(0);
+
+        components.clear();
     }
 
     /**Getters**/

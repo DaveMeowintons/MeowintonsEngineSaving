@@ -54,8 +54,6 @@ public class Main {
         writer.writeDatabaseToFile(database);
         writer.close();
 
-//        System.out.println(database);
-
         TSReader reader = new TSReader();
         reader.open(loader, dir + "/Example.tsd");
         TSDatabase loaded = TSDatabase.deserialise(reader.getData());
@@ -70,7 +68,7 @@ public class Main {
 //            Logger.log(LogLevel.DEBUG, Main.class.getSimpleName(), e);
 
         //Clean up
-//        testManager.destroy();
+        testManager.destroy();
     }
 
 }

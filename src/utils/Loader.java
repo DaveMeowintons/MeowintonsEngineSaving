@@ -53,6 +53,11 @@ public class Loader {
     }
 
     public void loadECSManagerFromDatabase(ECSManager manager, TSDatabase database){
+        //Remove all entities from the ECSManager before loading in new entities
+        for(Entity e : manager.getEntities())
+            manager.removeEntity(e);
+        manager.update(0);
+
         //Go through each object in database
         for(TSObject object : database.getObjects()){
             if(object.getName().equals("Entity")){
@@ -103,6 +108,9 @@ public class Loader {
                 manager.loadEntity(new Entity(entityID, components));
             }
         }
+
+        //Update ECS to add all entities into working list
+        manager.update(0);
     }
 
     /**
