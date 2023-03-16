@@ -46,7 +46,7 @@ public class Main {
 
         ECSManager testManager = new ECSManager();
         testManager.addSystem(new TestSystem());
-        testManager.createEntity(new TestComponent());
+        testManager.createEntity(new TestComponent(), new MeshComponent("test"));
 
         TSDatabase database = loader.saveECSManagerToDatabase(testManager);
         TSWriter writer = new TSWriter();

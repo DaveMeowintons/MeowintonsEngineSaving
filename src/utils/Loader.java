@@ -1,5 +1,6 @@
 package utils;
 
+import _main.MeshComponent;
 import ecs.ECSManager;
 import ecs.Entity;
 import ecs.components.Component;
@@ -12,7 +13,9 @@ import utils.serialisation.dataObjects.*;
 import utils.serialisation.types.TSDataType;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -96,24 +99,18 @@ public class Loader {
 
                     //Get Class from stored list of used component classes with the component ID
                     Class<? extends Component> clazz = manager.getComponents().get((int)componentID);
-                    //todo: get constructor objects
-//                    List<Object> constructorObjects = new ArrayList<>();
 
-//                    for(Constructor<?> constructor : c.getConstructors()){
-//                        if(constructor.getParameterCount() != component.getFieldCount()) continue;
+                    //Get first available constructor for component
+                    Constructor<?> constructor = clazz.getConstructors()[0];
+                    //Create array of Classes to store argument Class types in
+                    Class<?>[] clazzArguments = new Class<?>[constructor.getParameters().length];
 
-//                        for(Parameter p : constructor.getParameters()){
-//                            for(TSField tsField : component.getFields().values()){
-//                                if(!p.getName().equals(tsField.getName())) continue;
-
-//                                constructorObjects.add(TSDataType.value(tsField.getDataType(), tsField.getData()));
-//                                break;
-//                            }
-//                        }
-//                    }
+                    //Store all Class types into array
+                    for(int i = 0; i < clazzArguments.length; i++)
+                        clazzArguments[i] = constructor.getParameters()[i].getType();
 
                     //Create the component object
-                    Object obj = ReflectionTools.createObject(clazz, new ArrayList<>());
+                    Object obj = ReflectionTools.createObject(clazz, clazzArguments);
 
                     //todo: arraylists
 

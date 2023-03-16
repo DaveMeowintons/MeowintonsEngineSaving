@@ -65,4 +65,23 @@ public class ReflectionTools {
 
         return null;
     }
+
+    /**
+     * Create a new object of a given Class instance using the constructor matching the given class types
+     * @param clazz Class we want to make an instance of
+     * @param clazzArgs Class types used to make instance
+     * @return New instance of given class
+     */
+    public static Object createObject(Class<?> clazz, Class<?>[] clazzArgs){
+        try{
+            Object[] args = new Class[clazzArgs.length];
+
+            Constructor<?> explicitConstructor = clazz.getConstructor(clazzArgs);
+            return explicitConstructor.newInstance(args);
+        }catch(Exception error){
+            Logger.log(LogLevel.ERROR, ReflectionTools.class.getSimpleName(), error);
+        }
+
+        return null;
+    }
 }
