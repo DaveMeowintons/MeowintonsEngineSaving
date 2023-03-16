@@ -97,6 +97,20 @@ public class Loader {
                     //Get Class from stored list of used component classes with the component ID
                     Class<? extends Component> clazz = manager.getComponents().get((int)componentID);
                     //todo: get constructor objects
+//                    List<Object> constructorObjects = new ArrayList<>();
+
+//                    for(Constructor<?> constructor : c.getConstructors()){
+//                        if(constructor.getParameterCount() != component.getFieldCount()) continue;
+
+//                        for(Parameter p : constructor.getParameters()){
+//                            for(TSField tsField : component.getFields().values()){
+//                                if(!p.getName().equals(tsField.getName())) continue;
+
+//                                constructorObjects.add(TSDataType.value(tsField.getDataType(), tsField.getData()));
+//                                break;
+//                            }
+//                        }
+//                    }
 
                     //Create the component object
                     Object obj = ReflectionTools.createObject(clazz, new ArrayList<>());
