@@ -10,7 +10,6 @@ import utils.serialisation.types.TSDataType;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.util.Arrays;
 
 public class TSWriter extends FileWriter {
     public static final byte[] HEADER  = "TSDB".getBytes();

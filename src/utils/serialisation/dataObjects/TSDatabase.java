@@ -103,6 +103,7 @@ public class TSDatabase extends TSBase {
         for(int i = 0; i < database.objectCount; i++){
             TSObject obj = TSObject.deserialise(data, pointer);
             database.objects.put(obj.getName(), obj);
+            pointer += obj.getSize();
         }
 
         //Return the completed database
