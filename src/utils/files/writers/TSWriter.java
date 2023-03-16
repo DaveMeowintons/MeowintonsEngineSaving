@@ -335,7 +335,7 @@ public class TSWriter extends FileWriter {
     public static int writeBytes(byte[] dest, int pointer, boolean value){
         if(dest.length < pointer + TSDataType.getSize(TSDataType.BOOLEAN)) return pointer;
 
-        return writeBytes(dest, pointer, value ? 1 : 0);
+        return writeBytes(dest, pointer, value ? (byte)1 : (byte)0);
     }
 
     /**
@@ -365,6 +365,7 @@ public class TSWriter extends FileWriter {
         char[] chars = new char[value.length()];
         for (int i = 0; i < value.length(); i++) chars[i] = value.charAt(i);
 
+        pointer = writeBytes(dest, pointer, (short)(TSDataType.getSize(TSDataType.BYTE) * value.length()));
         return writeBytes(dest, pointer, chars);
     }
 

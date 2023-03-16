@@ -3,9 +3,16 @@ package ecs;
 import ecs.components.Component;
 import ecs.systems.ComponentSorter;
 import ecs.systems.ECSystem;
+import utils.reflection.ReflectionTools;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
+import utils.reflection.TSParser;
+import utils.serialisation.dataObjects.TSBase;
+import utils.serialisation.dataObjects.TSDatabase;
+import utils.serialisation.dataObjects.TSField;
+import utils.serialisation.dataObjects.TSObject;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.List;
 
@@ -52,6 +59,7 @@ public class ECSManager {
     }
 
     public void addEntity(Entity e){ e.setID(entityID++); entitiesToAdd.add(e); }
+    public void loadEntity(Entity e){ entitiesToAdd.add(e); }
     public void removeEntity(Entity e){ entitiesToRemove.add(e); }
 
     public void addComponent(Entity e, Component... components){ componentsToAdd.put(e, validateComponents(components)); }
@@ -74,7 +82,9 @@ public class ECSManager {
      * @param component Component class
      */
     private void loadComponent(Class<? extends Component> component){
-        if(components.contains(component)) return;  //Component already loaded into list so ignore
+        if(components.contains(component)){
+            return;  //Component already loaded into list so ignore
+        }
 
         components.add(component);
     }
@@ -160,7 +170,6 @@ public class ECSManager {
      */
     public void destroy(){
         entitiesToRemove.addAll(entities);
-        components.clear();
         //Ensures all working lists are cleared
         update(0);
     }

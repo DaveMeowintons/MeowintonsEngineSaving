@@ -5,7 +5,9 @@ import ecs.systems.ECSystem;
 
 public class TestSystem extends ECSystem {
     public TestSystem(){
-        super(new ComponentSorter(true, TestComponent.class, AnotherComponent.class));
+        super(
+                new ComponentSorter(true, TestComponent.class, OtherComponent.class)
+        );
     }
 
     @Override

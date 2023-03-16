@@ -5,7 +5,7 @@ import utils.Loader;
 import java.io.File;
 
 public abstract class FileReader {
-    protected String         fileName;
+    protected String fileName;
 
     /**
      * Opens a local file stored within the project file

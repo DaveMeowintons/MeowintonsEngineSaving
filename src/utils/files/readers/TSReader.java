@@ -12,6 +12,7 @@ public class TSReader extends FileReader {
     protected BufferedInputStream reader;
     protected byte[]              data;
 
+    @Override
     public void open(Loader loader, String file){
         this.fileName = file;
         this.reader = loader.getSerialisedData(file);
@@ -19,6 +20,7 @@ public class TSReader extends FileReader {
         readData();
     }
 
+    @Override
     public void open(Loader loader, File file){
         this.fileName = file.getName();
         this.reader = loader.getSerialisedData(file);
@@ -26,6 +28,7 @@ public class TSReader extends FileReader {
         readData();
     }
 
+    @Override
     public void close(){
         try{
             this.reader.close();

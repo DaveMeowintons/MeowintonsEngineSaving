@@ -108,6 +108,18 @@ public class TSObject extends TSBase {
     }
 
     /**
+     * Add a TSBase object into the correct array
+     * @param object TSBase to add
+     */
+    public void add(TSBase   object){
+        switch(object.getClass().getSimpleName()){
+            case "TSObject": add((TSObject)object); break;
+            case "TSField":  add((TSField) object); break;
+            case "TSArray":  add((TSArray) object); break;
+        }
+    }
+
+    /**
      * Add a TSObject into the local TSObject array
      * @param object TSObject to add
      */
@@ -116,12 +128,12 @@ public class TSObject extends TSBase {
      * Add a TSField into the local TSField array
      * @param field TSField to add
      */
-    public void add (TSField  field){ this.fields .put(field.getName(), field ); this.fieldCount  = (short)this.fields .size(); this.size += field .size; }
+    public void add(TSField  field){ this.fields .put(field.getName(), field ); this.fieldCount  = (short)this.fields .size(); this.size += field .size; }
     /**
      * Add a TSArray into the local TSArray array
      * @param array TSArray to add
      */
-    public void add (TSArray  array){ this.arrays .put(array.getName(), array ); this.arrayCount  = (short)this.arrays .size(); this.size += array .size; }
+    public void add(TSArray  array){ this.arrays .put(array.getName(), array ); this.arrayCount  = (short)this.arrays .size(); this.size += array .size; }
 
     /**
      * Find a specified TSObject from the Mapped TSObject list
