@@ -7,6 +7,7 @@ import utils.serialisation.dataObjects.TSField;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TSParser {
@@ -76,6 +77,49 @@ public class TSParser {
                 }
 
                 break;
+        }
+
+        return null;
+    }
+
+    public static List convertToList(Object object){
+        switch(object.getClass().getSimpleName()){
+            case "byte[]":
+                List<Byte> bytes = new ArrayList<>();
+                for(byte b : (byte[])object) bytes.add(b);
+                return bytes;
+            case "Boolean[]":
+                List<Boolean> booleans = new ArrayList<>();
+                for(Boolean bool : (boolean[])object) booleans.add(bool);
+                return booleans;
+            case "int[]":
+                List<Integer> ints = new ArrayList<>();
+                for(int i : (int[])object) ints.add(i);
+                return ints;
+            case "short[]":
+                List<Short> shorts = new ArrayList<>();
+                for(short s : (short[])object) shorts.add(s);
+                return shorts;
+            case "long[]":
+                List<Long> longs = new ArrayList<>();
+                for(long l : (long[])object) longs.add(l);
+                return longs;
+            case "double[]":
+                List<Double> doubles = new ArrayList<>();
+                for(double d : (double[])object) doubles.add(d);
+                return doubles;
+            case "float[]":
+                List<Float> floats = new ArrayList<>();
+                for(float f : (float[])object) floats.add(f);
+                return floats;
+            case "char[]":
+                List<Character> chars = new ArrayList<>();
+                for(char c : (char[])object) chars.add(c);
+                return chars;
+            case "String[]":
+                List<String> strings = new ArrayList<>();
+                for(String s : (String[])object) strings.add(s);
+                return strings;
         }
 
         return null;

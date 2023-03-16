@@ -19,6 +19,7 @@ import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Loader {
@@ -112,8 +113,6 @@ public class Loader {
                     //Create the component object
                     Object obj = ReflectionTools.createObject(clazz, clazzArguments);
 
-                    //todo: arraylists
-
                     //Load all component variables and store them in created component object
                     for(Field f : clazz.getDeclaredFields()){
                         if(component.getFields().containsKey(f.getName())){
@@ -121,7 +120,12 @@ public class Loader {
                             ReflectionTools.setField(obj, f, field.getDataObject());
                         }else if(component.getArrays().containsKey(f.getName())){
                             TSArray array = component.getArrays().get(f.getName());
-                            ReflectionTools.setField(obj, f, array.getDataObject());
+
+                            if(f.getType().isAssignableFrom(List.class)){
+                                ReflectionTools.setField(obj, f, TSParser.convertToList(array.getDataObject()));
+                            }else{
+                                ReflectionTools.setField(obj, f, array.getDataObject());
+                            }
                         }
                     }
 

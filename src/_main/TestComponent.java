@@ -25,9 +25,13 @@ public class TestComponent extends Component {
     private String aString = "string";
     private String[] strings = { "string", "string two!" };
 
-//    private List<Integer> list = new ArrayList<>();
+    private List<Integer> list = new ArrayList<>();
 
     public TestComponent(){
-//        list.add(32);
+        list.add(32);
+    }
+
+    public String toString(){
+        return list.toString();
     }
 }
