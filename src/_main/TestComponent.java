@@ -25,9 +25,9 @@ public class TestComponent extends Component {
     private String aString = "string";
     private String[] strings = { "string", "string two!" };
 
-    private List<Integer> list = new ArrayList<>();
+//    private List<Integer> list = new ArrayList<>();
 
-    protected TestComponent(){
-        list.add(32);
+    public TestComponent(){
+//        list.add(32);
     }
 }

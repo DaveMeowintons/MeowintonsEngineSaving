@@ -8,9 +8,7 @@ import utils.logging.Logger;
 import utils.serialisation.types.TSContainerType;
 import utils.serialisation.types.TSDataType;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TSDatabase extends TSBase {
     public static final byte CONTAINER_TYPE = TSContainerType.DATABASE;
@@ -19,7 +17,8 @@ public class TSDatabase extends TSBase {
     private short  version = TSWriter.VERSION;   //Current version of ThunderStorm for legacy support (can change)
 
     private short objectCount;          //Amount of items in "objects" map stored as a short
-    private final Map<String, TSObject> objects = new HashMap<>();
+//    private final Map<String, TSObject> objects = new HashMap<>();
+    private final List<TSObject> objects = new ArrayList<>();
 
     private TSDatabase(){
         size += header.length                          +    //HEADER
@@ -102,7 +101,7 @@ public class TSDatabase extends TSBase {
         //Deserialise the objects stored within the raw data
         for(int i = 0; i < database.objectCount; i++){
             TSObject obj = TSObject.deserialise(data, pointer);
-            database.objects.put(obj.getName(), obj);
+            database.objects.add(obj);
             pointer += obj.getSize();
         }
 
@@ -114,17 +113,17 @@ public class TSDatabase extends TSBase {
      * Add a TSObject into the local TSObject array
      * @param object TSObject to add
      */
-    public void add(TSObject object){ this.objects.put(object.getName(), object); this.objectCount = (short)this.objects.size(); this.size += object.getSize(); }
-
-    /**
-     * Find a specified TSObject from the Mapped TSObject list
-     * @param name name of TSObject
-     */
-    public TSObject findObject(String name){
-        if(objects.containsKey(name)) return objects.get(name);
-
-        return null;
-    }
+    public void add(TSObject object){ this.objects.add(object); this.objectCount = (short)this.objects.size(); this.size += object.getSize(); }
+//
+//    /**
+//     * Find a specified TSObject from the Mapped TSObject list
+//     * @param name name of TSObject
+//     */
+//    public TSObject findObject(String name){
+//        if(objects.containsKey(name)) return objects.get(name);
+//
+//        return null;
+//    }
 
     /**Getters**/
 
@@ -132,7 +131,8 @@ public class TSDatabase extends TSBase {
     public short getVersion(){ return version; }
 
     public short getObjectCount(){ return objectCount; }
-    public Map<String, TSObject> getObjects (){ return objects; }
+//    public Map<String, TSObject> getObjects (){ return objects; }
+    public List<TSObject> getObjects(){ return objects; }
 
     /**To String**/
 
@@ -146,7 +146,7 @@ public class TSDatabase extends TSBase {
                     .append("Size (in bytes): ").append(size).append("\n")
                     .append("Object count: ").append(objectCount).append("\n").append("\n");
 
-        for(TSObject object : objects.values())
+        for(TSObject object : objects)
             returnString.append(object);
 
         return returnString.toString();

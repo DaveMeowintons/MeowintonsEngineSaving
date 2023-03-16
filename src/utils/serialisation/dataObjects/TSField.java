@@ -219,6 +219,7 @@ public class TSField extends TSBase {
 
     public byte   getDataType(){ return dataType; }
     public byte[] getData(){ return data; }
+    public Object getDataObject(){ return TSDataType.value(dataType, data); }
 
     /**To String**/
 

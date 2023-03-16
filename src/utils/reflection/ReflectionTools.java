@@ -3,7 +3,9 @@ package utils.reflection;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class ReflectionTools {
     public static Object readField(Object origin, Field f){
@@ -30,5 +32,19 @@ public class ReflectionTools {
             Logger.log(LogLevel.ERROR, ReflectionTools.class.getSimpleName(), "Couldn't set field " + f.getName() + "!");
             Logger.log(LogLevel.ERROR, ReflectionTools.class.getSimpleName(), error);
         }
+    }
+
+    public static Object createObject(Class<?> clazz, List<Object> args){
+        try{
+            Class<?>[] clazzArgs = new Class[args.size()];
+            for(int i = 0; i < clazzArgs.length; i++) clazzArgs[i] = args.get(i).getClass();
+
+            Constructor<?> explicitConstructor = clazz.getConstructor();
+            return explicitConstructor.newInstance(args.toArray());
+        }catch(Exception error){
+            Logger.log(LogLevel.ERROR, ReflectionTools.class.getSimpleName(), error);
+        }
+
+        return null;
     }
 }

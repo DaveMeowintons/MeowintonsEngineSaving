@@ -257,6 +257,21 @@ public class TSArray extends TSBase {
     public byte getDataType(){ return dataType; }
     public int getDataCount(){ return dataCount; }
 
+    public Object getDataObject(){
+        switch(dataType){
+            case TSDataType.BYTE: return byteData;
+            case TSDataType.SHORT: return shortData;
+            case TSDataType.INTEGER: return intData;
+            case TSDataType.LONG: return longData;
+            case TSDataType.FLOAT: return floatData;
+            case TSDataType.DOUBLE: return doubleData;
+            case TSDataType.BOOLEAN: return booleanData;
+            case TSDataType.CHAR: return charData;
+            case TSDataType.STRING: return stringData;
+            default: return null;
+        }
+    }
+
     public byte[]       getByteData()      { return byteData;       }
     public short[]      getShortData()     { return shortData;      }
     public int[]        getIntData()       { return intData;        }

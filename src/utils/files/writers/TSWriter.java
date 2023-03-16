@@ -56,7 +56,7 @@ public class TSWriter extends FileWriter {
         pointer = writeBytes(data, pointer, database.getSize());
 
         pointer = writeBytes(data, pointer, database.getObjectCount());
-        for(TSObject object : database.getObjects().values())
+        for(TSObject object : database.getObjects())
             pointer = writeObject(data, pointer, object);
 
         return data;
