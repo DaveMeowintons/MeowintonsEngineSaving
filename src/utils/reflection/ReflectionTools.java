@@ -8,6 +8,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class ReflectionTools {
+    /**
+     * Reads an Object's field and returns the value
+     * @param origin Object with field value we want
+     * @param f Field we're reading
+     * @return Value of field in context of the origin
+     */
     public static Object readField(Object origin, Field f){
         try{
             f.setAccessible(true);
@@ -23,6 +29,12 @@ public class ReflectionTools {
         return null;
     }
 
+    /**
+     * Sets an Object's field value
+     * @param origin Object with field we want to set value of
+     * @param f Field we're setting
+     * @param value Value we're giving the field
+     */
     public static void setField(Object origin, Field f, Object value){
         try{
             f.setAccessible(true);
@@ -34,6 +46,12 @@ public class ReflectionTools {
         }
     }
 
+    /**
+     * Creates a new object of the given Class instance using the Constructor matching the given args
+     * @param clazz Class we want to make an instance of
+     * @param args Arguments used to make instance
+     * @return New instance of given Class
+     */
     public static Object createObject(Class<?> clazz, List<Object> args){
         try{
             Class<?>[] clazzArgs = new Class[args.size()];

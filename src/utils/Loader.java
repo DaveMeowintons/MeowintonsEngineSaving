@@ -23,6 +23,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Loader {
+
+    /**
+     * Store all Entities in an ECSManager into a TSDatabase for saving to file
+     * @param manager ECSManager we want to save
+     * @return TSDatabase containing all necessary Entity information for loading later
+     */
     public TSDatabase saveECSManagerToDatabase(ECSManager manager){
         //Update ECS to clear and removal queues without updating game logic
         manager.update(0);
@@ -58,6 +64,11 @@ public class Loader {
         return database;
     }
 
+    /**
+     * Reset an ECSManager and load a TSDatabase into it
+     * @param manager ECSManager we want to load a TSDatabase into
+     * @param database TSDatabase we want to load into the ECSManager
+     */
     public void loadECSManagerFromDatabase(ECSManager manager, TSDatabase database){
         //Remove all entities from the ECSManager before loading in new entities
         for(Entity e : manager.getEntities())
