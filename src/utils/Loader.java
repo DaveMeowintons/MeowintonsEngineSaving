@@ -31,21 +31,27 @@ public class Loader {
 
         for(Entity e : manager.getEntities()){
             TSObject entity = TSObject.Create("Entity");
+            //Add entity ID to TSObject
             entity.add(TSField.Long("ID", e.getID()));
 
+            //Go through each component in entity to store in database
             for(Component c : e.getComponents().values()){
+                //Create a new TSObject for the component
                 TSObject component = TSObject.Create(c.getClass().getSimpleName());
+                //Add component ID to TSObject
                 component.add(TSField.Long("ID", c.getID()));
 
+                //Store all fields in component
                 for(Field f : c.getClass().getDeclaredFields()){
                     TSBase b = TSParser.parseObject(c, f);
-                    if(b != null)
-                        component.add(b);
+                    if(b != null) component.add(b);
                 }
 
+                //Add component to parent entity TSObject
                 entity.add(component);
             }
 
+            //Add entity to database
             database.add(entity);
         }
 
@@ -60,6 +66,7 @@ public class Loader {
 
         //Go through each object in database
         for(TSObject object : database.getObjects()){
+            //Only want to deal with entities
             if(object.getName().equals("Entity")){
                 //Get the ID
                 TSField eID = object.getFields().get("ID");
@@ -69,6 +76,7 @@ public class Loader {
 
                 //Load components
                 for(TSObject component : object.getObjects().values()){
+                    //Get the ID
                     TSField cID = component.getFields().get("ID");
                     long componentID = TSDataType.value(cID.getDataType(), cID.getData());
 
@@ -78,10 +86,12 @@ public class Loader {
                     Class<? extends Component> clazz = manager.getComponents().get((int)componentID);
                     //todo: get constructor objects
 
+                    //Create the component object
                     Object obj = ReflectionTools.createObject(clazz, new ArrayList<>());
 
                     //todo: arraylists
 
+                    //Load all component variables and store them in created component object
                     for(Field f : clazz.getDeclaredFields()){
                         if(component.getFields().containsKey(f.getName())){
                             TSField field = component.getFields().get(f.getName());
@@ -91,8 +101,12 @@ public class Loader {
                             ReflectionTools.setField(obj, f, array.getDataObject());
                         }
                     }
+
+                    //Add component object to list of components
+                    components.add((Component)obj);
                 }
 
+                //Create entity with correct ID and components
                 manager.loadEntity(new Entity(entityID, components));
             }
         }
