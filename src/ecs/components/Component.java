@@ -1,6 +1,6 @@
 package ecs.components;
 
-public class Component {
+public abstract class Component {
     public static final long NO_ID = Long.MIN_VALUE;
 
     private long id;

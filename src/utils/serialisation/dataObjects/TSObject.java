@@ -7,6 +7,7 @@ import utils.serialisation.types.TSContainerType;
 import utils.serialisation.types.TSDataType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TSObject extends TSBase {
@@ -105,6 +106,14 @@ public class TSObject extends TSBase {
 
         //Return the completed object
         return object;
+    }
+
+    /**
+     * Add TSBase objects into the correct arrays
+     * @param objects TSBases to add
+     */
+    public void add(List<TSBase> objects){
+        for(TSBase obj : objects) add(obj);
     }
 
     /**

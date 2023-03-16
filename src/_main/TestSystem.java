@@ -7,7 +7,7 @@ public class TestSystem extends ECSystem {
 
     public TestSystem(){
         super(
-                new ComponentSorter(true, TestComponent.class, OtherComponent.class)
+                new ComponentSorter(true, TestComponent.class, OtherComponent.class, MeshComponent.class)
         );
     }
 

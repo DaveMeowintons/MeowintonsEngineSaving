@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TSParser {
-    public static TSBase parseObject(Component component, Field field){
+    public static TSBase parseField(Component component, Field field){
         Object obj = ReflectionTools.readField(component, field);
 
         switch(obj.getClass().getSimpleName()){

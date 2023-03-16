@@ -3,8 +3,7 @@ package utils;
 import ecs.ECSManager;
 import ecs.Entity;
 import ecs.components.Component;
-import ecs.systems.ComponentSorter;
-import ecs.systems.ECSystem;
+import ecs.components.ComponentSerializer;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
 import utils.reflection.ReflectionTools;
@@ -13,14 +12,11 @@ import utils.serialisation.dataObjects.*;
 import utils.serialisation.types.TSDataType;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Loader {
 
@@ -47,10 +43,15 @@ public class Loader {
                 //Add component ID to TSObject
                 component.add(TSField.Long("ID", c.getID()));
 
-                //Store all fields in component
-                for(Field f : c.getClass().getDeclaredFields()){
-                    TSBase b = TSParser.parseObject(c, f);
-                    if(b != null) component.add(b);
+                if(c instanceof ComponentSerializer){
+                    //Component has specific serialise instructions
+                    component.add(((ComponentSerializer)c).serialise());
+                }else{
+                    //Store all fields in component
+                    for(Field f : c.getClass().getDeclaredFields()){
+                        TSBase b = TSParser.parseField(c, f);
+                        if(b != null) component.add(b);
+                    }
                 }
 
                 //Add component to parent entity TSObject

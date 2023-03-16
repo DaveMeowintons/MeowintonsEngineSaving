@@ -57,7 +57,7 @@ public class ReflectionTools {
             Class<?>[] clazzArgs = new Class[args.size()];
             for(int i = 0; i < clazzArgs.length; i++) clazzArgs[i] = args.get(i).getClass();
 
-            Constructor<?> explicitConstructor = clazz.getConstructor();
+            Constructor<?> explicitConstructor = clazz.getConstructor(clazzArgs);
             return explicitConstructor.newInstance(args.toArray());
         }catch(Exception error){
             Logger.log(LogLevel.ERROR, ReflectionTools.class.getSimpleName(), error);
