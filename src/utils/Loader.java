@@ -121,11 +121,10 @@ public class Loader {
                         }else if(component.getArrays().containsKey(f.getName())){
                             TSArray array = component.getArrays().get(f.getName());
 
-                            if(f.getType().isAssignableFrom(List.class)){
-                                ReflectionTools.setField(obj, f, TSParser.convertToList(array.getDataObject()));
-                            }else{
-                                ReflectionTools.setField(obj, f, array.getDataObject());
-                            }
+                            //Check if field is a List
+                            //If yes convert array data into List data
+                            //If no assign array data
+                            ReflectionTools.setField(obj, f, f.getType().isAssignableFrom(List.class) ? TSParser.convertToList(array.getDataObject()) : array.getDataObject());
                         }
                     }
 
