@@ -3,6 +3,13 @@ package utils.serialisation.dataObjects;
 import utils.files.readers.TSReader;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
+import utils.maths.vectors.Vector2;
+import utils.maths.vectors.Vector3;
+import utils.maths.vectors.Vector4;
+import utils.maths.matrices.Quaternion;
+import utils.maths.matrices.Matrix2;
+import utils.maths.matrices.Matrix3;
+import utils.maths.matrices.Matrix4;
 import utils.serialisation.types.TSContainerType;
 import utils.serialisation.types.TSDataType;
 
@@ -22,6 +29,13 @@ public class TSArray extends TSBase {
     public boolean[]    booleanData;    //Raw boolean array data
     public char[]       charData;       //Raw char array data
     public String[]     stringData;     //Raw String array data
+    public Vector2[]    vector2Data;    //Raw Vector2 array data
+    public Vector3[]    vector3Data;    //Raw Vector3 array data
+    public Vector4[]    vector4Data;    //Raw Vector4 array data
+    public Quaternion[] quaternionData; //Raw Quaternion array data
+    public Matrix2[]    matrix2Data;    //Raw Quaternion array data
+    public Matrix3[]    matrix3Data;    //Raw Quaternion array data
+    public Matrix4[]    matrix4Data;    //Raw Quaternion array data
 
     private TSArray(){
         size += TSDataType.getSize(TSDataType.BYTE) + //dataType
@@ -157,7 +171,7 @@ public class TSArray extends TSBase {
     }
 
     /**
-     * Create a new TSArray holding a list of strings
+     * Create a new TSArray holding a list of Strings
      * @param name Name of array
      * @param data String array data
      * @return new TSArray
@@ -169,6 +183,118 @@ public class TSArray extends TSBase {
         array.dataCount  = data.length;
         array.stringData = data;
         array.size      += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Vector2s
+     * @param name Name of array
+     * @param data Vector2 array data
+     * @return new TSArray
+     */
+    public static TSArray Vector2(String name, Vector2[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.VECTOR2;
+        array.dataCount   = data.length;
+        array.vector2Data = data;
+        array.size       += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Vector3s
+     * @param name Name of array
+     * @param data Vector3 array data
+     * @return new TSArray
+     */
+    public static TSArray Vector3(String name, Vector3[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.VECTOR3;
+        array.dataCount   = data.length;
+        array.vector3Data = data;
+        array.size       += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Vector4s
+     * @param name Name of array
+     * @param data Vector4 array data
+     * @return new TSArray
+     */
+    public static TSArray Vector4(String name, Vector4[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.VECTOR4;
+        array.dataCount   = data.length;
+        array.vector4Data = data;
+        array.size       += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Quaternions
+     * @param name Name of array
+     * @param data Quaternion array data
+     * @return new TSArray
+     */
+    public static TSArray Quaternion(String name, Quaternion[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType       = TSDataType.QUATERNION;
+        array.dataCount      = data.length;
+        array.quaternionData = data;
+        array.size          += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Matrix2s
+     * @param name Name of array
+     * @param data Matrix2 array data
+     * @return new TSArray
+     */
+    public static TSArray Matrix2(String name, Matrix2[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.MATRIX2;
+        array.dataCount   = data.length;
+        array.matrix2Data = data;
+        array.size       += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Matrix3s
+     * @param name Name of array
+     * @param data Matrix3 array data
+     * @return new TSArray
+     */
+    public static TSArray Matrix3(String name, Matrix3[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.MATRIX3;
+        array.dataCount   = data.length;
+        array.matrix3Data = data;
+        array.size       += array.getDataSize();
+        return array;
+    }
+
+    /**
+     * Create a new TSArray holding a list of Matrix4s
+     * @param name Name of array
+     * @param data Matrix4 array data
+     * @return new TSArray
+     */
+    public static TSArray Matrix4(String name, Matrix4[] data){
+        TSArray array = new TSArray();
+        array.setName(name);
+        array.dataType    = TSDataType.MATRIX4;
+        array.dataCount   = data.length;
+        array.matrix4Data = data;
+        array.size       += array.getDataSize();
         return array;
     }
 
@@ -186,6 +312,13 @@ public class TSArray extends TSBase {
             case TSDataType.BOOLEAN:    return booleanData.length    * TSDataType.getSize(TSDataType.BOOLEAN);
             case TSDataType.CHAR:       return charData   .length    * TSDataType.getSize(TSDataType.CHAR);
             case TSDataType.STRING:     short  totalLength = 0; for(String s : stringData) totalLength += s.length(); return (stringData.length * TSDataType.getSize(TSDataType.SHORT)) + (totalLength * TSDataType.getSize(TSDataType.STRING));
+            case TSDataType.VECTOR2:    return vector2Data.length    * (TSDataType.getSize(TSDataType.FLOAT) *  2);
+            case TSDataType.VECTOR3:    return vector3Data.length    * (TSDataType.getSize(TSDataType.FLOAT) *  3);
+            case TSDataType.VECTOR4:    return vector4Data.length    * (TSDataType.getSize(TSDataType.FLOAT) *  4);
+            case TSDataType.QUATERNION: return quaternionData.length * (TSDataType.getSize(TSDataType.FLOAT) *  4);
+            case TSDataType.MATRIX2:    return matrix2Data.length    * (TSDataType.getSize(TSDataType.FLOAT) *  4);
+            case TSDataType.MATRIX3:    return matrix3Data.length    * (TSDataType.getSize(TSDataType.FLOAT) *  9);
+            case TSDataType.MATRIX4:    return matrix4Data.length    * (TSDataType.getSize(TSDataType.FLOAT) * 16);
         }
         return 0;
     }
@@ -244,6 +377,13 @@ public class TSArray extends TSBase {
             case TSDataType.BOOLEAN:    array.booleanData    = TSReader.readBooleans   (data, pointer, array.dataCount); break;
             case TSDataType.CHAR:       array.charData       = TSReader.readChars      (data, pointer, array.dataCount); break;
             case TSDataType.STRING:     array.stringData     = TSReader.readStrings    (data, pointer, array.dataCount); break;
+            case TSDataType.VECTOR2:    array.vector2Data    = TSReader.readVector2s   (data, pointer, array.dataCount); break;
+            case TSDataType.VECTOR3:    array.vector3Data    = TSReader.readVector3s   (data, pointer, array.dataCount); break;
+            case TSDataType.VECTOR4:    array.vector4Data    = TSReader.readVector4s   (data, pointer, array.dataCount); break;
+            case TSDataType.QUATERNION: array.quaternionData = TSReader.readQuaternions(data, pointer, array.dataCount); break;
+            case TSDataType.MATRIX2:    array.matrix2Data    = TSReader.readMatrix2s   (data, pointer, array.dataCount); break;
+            case TSDataType.MATRIX3:    array.matrix3Data    = TSReader.readMatrix3s   (data, pointer, array.dataCount); break;
+            case TSDataType.MATRIX4:    array.matrix4Data    = TSReader.readMatrix4s   (data, pointer, array.dataCount); break;
         }
 
         pointer += array.dataCount * TSDataType.getSize(array.dataType);
@@ -268,6 +408,13 @@ public class TSArray extends TSBase {
             case TSDataType.BOOLEAN: return booleanData;
             case TSDataType.CHAR: return charData;
             case TSDataType.STRING: return stringData;
+            case TSDataType.VECTOR2: return vector2Data;
+            case TSDataType.VECTOR3: return vector3Data;
+            case TSDataType.VECTOR4: return vector4Data;
+            case TSDataType.QUATERNION: return quaternionData;
+            case TSDataType.MATRIX2: return matrix2Data;
+            case TSDataType.MATRIX3: return matrix3Data;
+            case TSDataType.MATRIX4: return matrix4Data;
             default: return null;
         }
     }
@@ -281,6 +428,13 @@ public class TSArray extends TSBase {
     public boolean[]    getBooleanData()   { return booleanData;    }
     public char[]       getCharData()      { return charData;       }
     public String[]     getStringData()    { return stringData;     }
+    public Vector2[]    getVector2Data()   { return vector2Data;    }
+    public Vector3[]    getVector3Data()   { return vector3Data;    }
+    public Vector4[]    getVector4Data()   { return vector4Data;    }
+    public Quaternion[] getQuaternionData(){ return quaternionData; }
+    public Matrix2[]    getMatrix2Data()   { return matrix2Data;    }
+    public Matrix3[]    getMatrix3Data()   { return matrix3Data;    }
+    public Matrix4[]    getMatrix4Data()   { return matrix4Data;    }
 
     /**To String**/
 
@@ -309,6 +463,13 @@ public class TSArray extends TSBase {
             case TSDataType.BOOLEAN:    for (int i = 0; i < dataCount; i++) result.append(booleanData[i])   .append(", "); break;
             case TSDataType.CHAR:       for (int i = 0; i < dataCount; i++) result.append(charData[i])      .append(", "); break;
             case TSDataType.STRING:     for (int i = 0; i < dataCount; i++) result.append(stringData[i])    .append(", "); break;
+            case TSDataType.VECTOR2:    for (int i = 0; i < dataCount; i++) result.append(vector2Data[i])   .append(", "); break;
+            case TSDataType.VECTOR3:    for (int i = 0; i < dataCount; i++) result.append(vector3Data[i])   .append(", "); break;
+            case TSDataType.VECTOR4:    for (int i = 0; i < dataCount; i++) result.append(vector4Data[i])   .append(", "); break;
+            case TSDataType.QUATERNION: for (int i = 0; i < dataCount; i++) result.append(quaternionData[i]).append(", "); break;
+            case TSDataType.MATRIX2:    for (int i = 0; i < dataCount; i++) result.append(matrix2Data[i])   .append(", "); break;
+            case TSDataType.MATRIX3:    for (int i = 0; i < dataCount; i++) result.append(matrix3Data[i])   .append(", "); break;
+            case TSDataType.MATRIX4:    for (int i = 0; i < dataCount; i++) result.append(matrix4Data[i])   .append(", "); break;
         }
 
         return result.toString();

@@ -140,6 +140,13 @@ public class TSWriter extends FileWriter {
             case TSDataType.BOOLEAN:    pointer = writeBytes(data, pointer, array.getBooleanData());    break;
             case TSDataType.CHAR:       pointer = writeBytes(data, pointer, array.getCharData());       break;
             case TSDataType.STRING:     pointer = writeBytes(data, pointer, array.getStringData());     break;
+            case TSDataType.VECTOR2:    pointer = writeBytes(data, pointer, array.getVector2Data());    break;
+            case TSDataType.VECTOR3:    pointer = writeBytes(data, pointer, array.getVector3Data());    break;
+            case TSDataType.VECTOR4:    pointer = writeBytes(data, pointer, array.getVector4Data());    break;
+            case TSDataType.QUATERNION: pointer = writeBytes(data, pointer, array.getQuaternionData()); break;
+            case TSDataType.MATRIX2:    pointer = writeBytes(data, pointer, array.getMatrix2Data());    break;
+            case TSDataType.MATRIX3:    pointer = writeBytes(data, pointer, array.getMatrix3Data());    break;
+            case TSDataType.MATRIX4:    pointer = writeBytes(data, pointer, array.getMatrix4Data());    break;
         }
 
         return pointer;
