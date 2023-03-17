@@ -13,6 +13,13 @@ public class TSDataType {
     public static final byte BOOLEAN = 7;
     public static final byte CHAR    = 8;
     public static final byte STRING  = 9;
+    public static final byte VECTOR2    = 10;
+    public static final byte VECTOR3    = 11;
+    public static final byte VECTOR4    = 12;
+    public static final byte QUATERNION = 13;
+    public static final byte MATRIX2    = 14;
+    public static final byte MATRIX3    = 15;
+    public static final byte MATRIX4    = 16;
 
     /**
      * @param type TSDataType
@@ -20,15 +27,22 @@ public class TSDataType {
      */
     public static int getSize(byte type){
         switch(type){
-            case BYTE:    return Byte.SIZE      / 8;
-            case SHORT:   return Short.SIZE     / 8;
-            case INTEGER: return Integer.SIZE   / 8;
-            case LONG:    return Long.SIZE      / 8;
-            case FLOAT:   return Float.SIZE     / 8;
-            case DOUBLE:  return Double.SIZE    / 8;
-            case BOOLEAN: return Byte.SIZE      / 8;
-            case CHAR:    return Character.SIZE / 8;
-            case STRING:  return Character.SIZE / 8;
+            case BYTE:       return Byte.SIZE      / 8;
+            case SHORT:      return Short.SIZE     / 8;
+            case INTEGER:    return Integer.SIZE   / 8;
+            case LONG:       return Long.SIZE      / 8;
+            case FLOAT:      return Float.SIZE     / 8;
+            case DOUBLE:     return Double.SIZE    / 8;
+            case BOOLEAN:    return Byte.SIZE      / 8;
+            case CHAR:       return Character.SIZE / 8;
+            case STRING:     return Character.SIZE / 8;
+            case VECTOR2:    return (Float.SIZE     / 8) * 2;
+            case VECTOR3:    return (Float.SIZE     / 8) * 3;
+            case VECTOR4:    return (Float.SIZE     / 8) * 4;
+            case QUATERNION: return (Float.SIZE     / 8) * 4;
+            case MATRIX2:    return (Float.SIZE     / 8) * 4;
+            case MATRIX3:    return (Float.SIZE     / 8) * 9;
+            case MATRIX4:    return (Float.SIZE     / 8) * 16;
         }
 
         return 0;

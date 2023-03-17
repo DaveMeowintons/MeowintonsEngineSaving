@@ -2,6 +2,13 @@ package utils.files.writers;
 
 import utils.logging.LogLevel;
 import utils.logging.Logger;
+import utils.maths.matrices.Matrix2;
+import utils.maths.matrices.Matrix3;
+import utils.maths.matrices.Matrix4;
+import utils.maths.matrices.Quaternion;
+import utils.maths.vectors.Vector2;
+import utils.maths.vectors.Vector3;
+import utils.maths.vectors.Vector4;
 import utils.serialisation.dataObjects.TSArray;
 import utils.serialisation.dataObjects.TSDatabase;
 import utils.serialisation.dataObjects.TSField;
@@ -147,6 +154,8 @@ public class TSWriter extends FileWriter {
         }
     }
 
+    /*Byte*/
+
     /**
      * Write byte value to byte array
      * @param dest destination byte array
@@ -174,6 +183,8 @@ public class TSWriter extends FileWriter {
         for(byte value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
+
+    /*Short*/
 
     /**
      * Write short value to byte array
@@ -203,6 +214,8 @@ public class TSWriter extends FileWriter {
         for(short value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
+
+    /*Integer*/
 
     /**
      * Write int value to byte array
@@ -234,6 +247,8 @@ public class TSWriter extends FileWriter {
         for(int value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
+
+    /*Long*/
 
     /**
      * Write long value to byte array
@@ -270,6 +285,8 @@ public class TSWriter extends FileWriter {
         return pointer;
     }
 
+    /*Float*/
+
     /**
      * Write float value to byte array
      * @param dest destination byte array
@@ -296,6 +313,8 @@ public class TSWriter extends FileWriter {
         for(float value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
+
+    /*Double*/
 
     /**
      * Write double value to byte array
@@ -324,6 +343,8 @@ public class TSWriter extends FileWriter {
         return pointer;
     }
 
+    /*Boolean*/
+
     /**
      * Write boolean value to byte array
      * @param dest destination byte array
@@ -350,6 +371,39 @@ public class TSWriter extends FileWriter {
         for(boolean value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
+
+    /*Character*/
+
+    /**
+     * Write char value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value char value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, char value){
+        if(dest.length < pointer + TSDataType.getSize(TSDataType.CHAR)) return pointer;
+
+        dest[pointer++] = (byte)((value >> 8) & 0xff);
+        dest[pointer++] = (byte)((value >> 0) & 0xff);
+        return pointer;
+    }
+
+    /**
+     * Write char array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values char array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, char[] values){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.CHAR) * values.length)) return pointer;
+
+        for(char value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*String*/
 
     /**
      * Write String value to byte array
@@ -383,32 +437,235 @@ public class TSWriter extends FileWriter {
         return pointer;
     }
 
+    /*Vector2*/
+
     /**
-     * Write char value to byte array
+     * Write Vector2 value to byte array
      * @param dest destination byte array
      * @param pointer int pointer in byte array
-     * @param value char value
+     * @param value Vector2 value
      * @return pointer
      */
-    public static int writeBytes(byte[] dest, int pointer, char value){
-        if(dest.length < pointer + TSDataType.getSize(TSDataType.CHAR)) return pointer;
+    public static int writeBytes(byte[] dest, int pointer, Vector2 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 2)) return pointer;
 
-        dest[pointer++] = (byte)((value >> 8) & 0xff);
-        dest[pointer++] = (byte)((value >> 0) & 0xff);
+        pointer = writeBytes(dest, pointer, value.getX());
+        pointer = writeBytes(dest, pointer, value.getY());
+
         return pointer;
     }
 
     /**
-     * Write char array values to byte array
+     * Write Vector2 array values to byte array
      * @param dest destination byte array
      * @param pointer int pointer in byte array
-     * @param values char array values
+     * @param values Vector2 array values
      * @return pointer
      */
-    public static int writeBytes(byte[] dest, int pointer, char[] values){
-        if(dest.length < pointer + (TSDataType.getSize(TSDataType.CHAR) * values.length)) return pointer;
+    public static int writeBytes(byte[] dest, int pointer, Vector2[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 2) * values.length)) return pointer;
 
-        for(char value : values) pointer = writeBytes(dest, pointer, value);
+        for(Vector2 value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Vector3*/
+
+    /**
+     * Write Vector3 value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Vector3 value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Vector3 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 3)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.getX());
+        pointer = writeBytes(dest, pointer, value.getY());
+        pointer = writeBytes(dest, pointer, value.getZ());
+
+        return pointer;
+    }
+
+    /**
+     * Write Vector3 array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Vector3 array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Vector3[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 3) * values.length)) return pointer;
+
+        for(Vector3 value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Vector4*/
+
+    /**
+     * Write Vector4 value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Vector4 value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Vector4 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 4)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.getX());
+        pointer = writeBytes(dest, pointer, value.getY());
+        pointer = writeBytes(dest, pointer, value.getZ());
+        pointer = writeBytes(dest, pointer, value.getW());
+
+        return pointer;
+    }
+
+    /**
+     * Write Vector4 array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Vector4 array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Vector4[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 4) * values.length)) return pointer;
+
+        for(Vector4 value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Quaternion*/
+
+    /**
+     * Write Quaternion value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Quaternion value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Quaternion value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 4)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.getX());
+        pointer = writeBytes(dest, pointer, value.getY());
+        pointer = writeBytes(dest, pointer, value.getZ());
+        pointer = writeBytes(dest, pointer, value.getW());
+
+        return pointer;
+    }
+
+    /**
+     * Write Quaternion array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Quaternion array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Quaternion[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 4) * values.length)) return pointer;
+
+        for(Quaternion value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Matrix2*/
+
+    /**
+     * Write Matrix2 value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Matrix2 value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix2 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 4)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.m00()); pointer = writeBytes(dest, pointer, value.m01());
+        pointer = writeBytes(dest, pointer, value.m10()); pointer = writeBytes(dest, pointer, value.m11());
+
+        return pointer;
+    }
+
+    /**
+     * Write Matrix2 array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Matrix2 array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix2[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 4) * values.length)) return pointer;
+
+        for(Matrix2 value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Matrix3*/
+
+    /**
+     * Write Matrix3 value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Matrix3 value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix3 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 9)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.m00()); pointer = writeBytes(dest, pointer, value.m01()); pointer = writeBytes(dest, pointer, value.m02());
+        pointer = writeBytes(dest, pointer, value.m10()); pointer = writeBytes(dest, pointer, value.m11()); pointer = writeBytes(dest, pointer, value.m12());
+        pointer = writeBytes(dest, pointer, value.m20()); pointer = writeBytes(dest, pointer, value.m21()); pointer = writeBytes(dest, pointer, value.m22());
+
+        return pointer;
+    }
+
+    /**
+     * Write Matrix3 array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Matrix3 array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix3[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 9) * values.length)) return pointer;
+
+        for(Matrix3 value : values) pointer = writeBytes(dest, pointer, value);
+        return pointer;
+    }
+
+    /*Matrix4*/
+
+    /**
+     * Write Matrix4 value to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param value Matrix4 value
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix4 value){
+        if(dest.length < pointer + (TSDataType.getSize(TSDataType.FLOAT) * 16)) return pointer;
+
+        pointer = writeBytes(dest, pointer, value.m00()); pointer = writeBytes(dest, pointer, value.m01()); pointer = writeBytes(dest, pointer, value.m02()); pointer = writeBytes(dest, pointer, value.m03());
+        pointer = writeBytes(dest, pointer, value.m10()); pointer = writeBytes(dest, pointer, value.m11()); pointer = writeBytes(dest, pointer, value.m12()); pointer = writeBytes(dest, pointer, value.m13());
+        pointer = writeBytes(dest, pointer, value.m20()); pointer = writeBytes(dest, pointer, value.m21()); pointer = writeBytes(dest, pointer, value.m22()); pointer = writeBytes(dest, pointer, value.m23());
+        pointer = writeBytes(dest, pointer, value.m30()); pointer = writeBytes(dest, pointer, value.m31()); pointer = writeBytes(dest, pointer, value.m32()); pointer = writeBytes(dest, pointer, value.m33());
+
+        return pointer;
+    }
+
+    /**
+     * Write Matrix4 array values to byte array
+     * @param dest destination byte array
+     * @param pointer int pointer in byte array
+     * @param values Matrix4 array values
+     * @return pointer
+     */
+    public static int writeBytes(byte[] dest, int pointer, Matrix4[] values){
+        if(dest.length < pointer + ((TSDataType.getSize(TSDataType.FLOAT) * 16) * values.length)) return pointer;
+
+        for(Matrix4 value : values) pointer = writeBytes(dest, pointer, value);
         return pointer;
     }
 }

@@ -16,18 +16,18 @@ public class TSParser {
         switch(obj.getClass().getSimpleName()){
             case "Byte":        return TSField.Byte     (field.getName(), (byte)obj);
             case "byte[]":      return TSArray.Byte     (field.getName(), (byte[])obj);
-            case "Boolean":     return TSField.Boolean  (field.getName(), (boolean)obj);
-            case "boolean[]":   return TSArray.Boolean  (field.getName(), (boolean[])obj);
-            case "Integer":     return TSField.Integer  (field.getName(), (int)obj);
-            case "int[]":       return TSArray.Integer  (field.getName(), (int[])obj);
             case "Short":       return TSField.Short    (field.getName(), (short)obj);
             case "short[]":     return TSArray.Short    (field.getName(), (short[])obj);
+            case "Integer":     return TSField.Integer  (field.getName(), (int)obj);
+            case "int[]":       return TSArray.Integer  (field.getName(), (int[])obj);
             case "Long":        return TSField.Long     (field.getName(), (long)obj);
             case "long[]":      return TSArray.Long     (field.getName(), (long[])obj);
-            case "Double":      return TSField.Double   (field.getName(), (double)obj);
-            case "double[]":    return TSArray.Double   (field.getName(), (double[])obj);
             case "Float":       return TSField.Float    (field.getName(), (float)obj);
             case "float[]":     return TSArray.Float    (field.getName(), (float[])obj);
+            case "Double":      return TSField.Double   (field.getName(), (double)obj);
+            case "double[]":    return TSArray.Double   (field.getName(), (double[])obj);
+            case "Boolean":     return TSField.Boolean  (field.getName(), (boolean)obj);
+            case "boolean[]":   return TSArray.Boolean  (field.getName(), (boolean[])obj);
             case "Character":   return TSField.Char     (field.getName(), (char)obj);
             case "char[]":      return TSArray.Char     (field.getName(), (char[])obj);
             case "String":      return TSField.String   (field.getName(), (String)obj);
@@ -41,30 +41,30 @@ public class TSParser {
                         byte[] bytes = new byte[list.size()];
                         for(int i = 0; i < list.size(); i++) bytes[i] = (byte)list.get(i);
                         return TSArray.Byte(field.getName(), bytes);
-                    case "Boolean":
-                        boolean[] booleans = new boolean[list.size()];
-                        for(int i = 0; i < list.size(); i++) booleans[i] = (boolean)list.get(i);
-                        return TSArray.Boolean(field.getName(), booleans);
-                    case "Integer":
-                        int[] ints = new int[list.size()];
-                        for(int i = 0; i < list.size(); i++) ints[i] = (int)list.get(i);
-                        return TSArray.Integer(field.getName(), ints);
                     case "Short":
                         short[] shorts = new short[list.size()];
                         for(int i = 0; i < list.size(); i++) shorts[i] = (short)list.get(i);
                         return TSArray.Short(field.getName(), shorts);
+                    case "Integer":
+                        int[] ints = new int[list.size()];
+                        for(int i = 0; i < list.size(); i++) ints[i] = (int)list.get(i);
+                        return TSArray.Integer(field.getName(), ints);
                     case "Long":
                         long[] longs = new long[list.size()];
                         for(int i = 0; i < list.size(); i++) longs[i] = (long)list.get(i);
                         return TSArray.Long(field.getName(), longs);
-                    case "Double":
-                        double[] doubles = new double[list.size()];
-                        for(int i = 0; i < list.size(); i++) doubles[i] = (double)list.get(i);
-                        return TSArray.Double(field.getName(), doubles);
                     case "Float":
                         float[] floats = new float[list.size()];
                         for(int i = 0; i < list.size(); i++) floats[i] = (float)list.get(i);
                         return TSArray.Float(field.getName(), floats);
+                    case "Double":
+                        double[] doubles = new double[list.size()];
+                        for(int i = 0; i < list.size(); i++) doubles[i] = (double)list.get(i);
+                        return TSArray.Double(field.getName(), doubles);
+                    case "Boolean":
+                        boolean[] booleans = new boolean[list.size()];
+                        for(int i = 0; i < list.size(); i++) booleans[i] = (boolean)list.get(i);
+                        return TSArray.Boolean(field.getName(), booleans);
                     case "Character":
                         char[] chars = new char[list.size()];
                         for(int i = 0; i < list.size(); i++) chars[i] = (char)list.get(i);
@@ -87,30 +87,30 @@ public class TSParser {
                 List<Byte> bytes = new ArrayList<>();
                 for(byte b : (byte[])object) bytes.add(b);
                 return bytes;
-            case "Boolean[]":
-                List<Boolean> booleans = new ArrayList<>();
-                for(Boolean bool : (boolean[])object) booleans.add(bool);
-                return booleans;
-            case "int[]":
-                List<Integer> ints = new ArrayList<>();
-                for(int i : (int[])object) ints.add(i);
-                return ints;
             case "short[]":
                 List<Short> shorts = new ArrayList<>();
                 for(short s : (short[])object) shorts.add(s);
                 return shorts;
+            case "int[]":
+                List<Integer> ints = new ArrayList<>();
+                for(int i : (int[])object) ints.add(i);
+                return ints;
             case "long[]":
                 List<Long> longs = new ArrayList<>();
                 for(long l : (long[])object) longs.add(l);
                 return longs;
-            case "double[]":
-                List<Double> doubles = new ArrayList<>();
-                for(double d : (double[])object) doubles.add(d);
-                return doubles;
             case "float[]":
                 List<Float> floats = new ArrayList<>();
                 for(float f : (float[])object) floats.add(f);
                 return floats;
+            case "double[]":
+                List<Double> doubles = new ArrayList<>();
+                for(double d : (double[])object) doubles.add(d);
+                return doubles;
+            case "Boolean[]":
+                List<Boolean> booleans = new ArrayList<>();
+                for(Boolean bool : (boolean[])object) booleans.add(bool);
+                return booleans;
             case "char[]":
                 List<Character> chars = new ArrayList<>();
                 for(char c : (char[])object) chars.add(c);
