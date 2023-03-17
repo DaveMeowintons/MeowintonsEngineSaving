@@ -1,7 +1,7 @@
 package utils.maths.vectors;
 
 public class Vector4 {
-    public float x, y, z, w;
+    private float x, y, z, w;
 
     public Vector4(float x, float y, float z, float w){
         this.x = x;

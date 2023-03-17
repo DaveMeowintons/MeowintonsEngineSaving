@@ -3,8 +3,8 @@ package utils.maths.matrices;
 import utils.maths.vectors.Vector2;
 
 public class Matrix2 {
-    float m00, m01,
-          m10, m11;
+    private float m00, m01,
+                  m10, m11;
 
     public Matrix2(float m00, float m01,
                    float m10, float m11){ this.set(m00, m01, m10, m11); }

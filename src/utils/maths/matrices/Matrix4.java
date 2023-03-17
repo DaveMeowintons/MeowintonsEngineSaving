@@ -3,10 +3,10 @@ package utils.maths.matrices;
 import utils.maths.vectors.Vector4;
 
 public class Matrix4 {
-    public float m00, m01, m02, m03,
-                 m10, m11, m12, m13,
-                 m20, m21, m22, m23,
-                 m30, m31, m32, m33;
+    private float m00, m01, m02, m03,
+                  m10, m11, m12, m13,
+                  m20, m21, m22, m23,
+                  m30, m31, m32, m33;
 
     public Matrix4(float m00, float m01, float m02, float m03,
                    float m10, float m11, float m12, float m13,

@@ -53,9 +53,9 @@ public class TestComponent extends Component {
     private Matrix4 matrix4 = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     private Matrix4[] matrix4s = new Matrix4[]{ new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), new Matrix4(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32) };
 
-    private List<Integer> list = new ArrayList<>();
+    private List<Vector2> list = new ArrayList<>();
 
     public TestComponent(){
-        list.add(32);
+        list.add(new Vector2(5, 10));
     }
 }

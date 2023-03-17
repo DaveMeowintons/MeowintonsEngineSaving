@@ -94,6 +94,34 @@ public class TSParser {
                         String[] strings = new String[list.size()];
                         for(int i = 0; i < list.size(); i++) strings[i] = (String)list.get(i);
                         return TSArray.String(field.getName(), strings);
+                    case "Vector2":
+                        Vector2[] vector2s = new Vector2[list.size()];
+                        for(int i = 0; i < list.size(); i++) vector2s[i] = (Vector2)list.get(i);
+                        return TSArray.Vector2(field.getName(), vector2s);
+                    case "Vector3":
+                        Vector3[] vector3s = new Vector3[list.size()];
+                        for(int i = 0; i < list.size(); i++) vector3s[i] = (Vector3)list.get(i);
+                        return TSArray.Vector3(field.getName(), vector3s);
+                    case "Vector4":
+                        Vector4[] vector4s = new Vector4[list.size()];
+                        for(int i = 0; i < list.size(); i++) vector4s[i] = (Vector4)list.get(i);
+                        return TSArray.Vector4(field.getName(), vector4s);
+                    case "Quaternion":
+                        Quaternion[] quaternions = new Quaternion[list.size()];
+                        for(int i = 0; i < list.size(); i++) quaternions[i] = (Quaternion)list.get(i);
+                        return TSArray.Quaternion(field.getName(), quaternions);
+                    case "Matrix2":
+                        Matrix2[] matrix2s = new Matrix2[list.size()];
+                        for(int i = 0; i < list.size(); i++) matrix2s[i] = (Matrix2)list.get(i);
+                        return TSArray.Matrix2(field.getName(), matrix2s);
+                    case "Matrix3":
+                        Matrix3[] matrix3s = new Matrix3[list.size()];
+                        for(int i = 0; i < list.size(); i++) matrix3s[i] = (Matrix3)list.get(i);
+                        return TSArray.Matrix3(field.getName(), matrix3s);
+                    case "Matrix4":
+                        Matrix4[] matrix4s = new Matrix4[list.size()];
+                        for(int i = 0; i < list.size(); i++) matrix4s[i] = (Matrix4)list.get(i);
+                        return TSArray.Matrix4(field.getName(), matrix4s);
                 }
 
                 break;
@@ -140,6 +168,34 @@ public class TSParser {
                 List<String> strings = new ArrayList<>();
                 for(String s : (String[])object) strings.add(s);
                 return strings;
+            case "Vector2[]":
+                List<Vector2> vector2s = new ArrayList<>();
+                for(Vector2 vector2 : (Vector2[])object) vector2s.add(vector2);
+                return vector2s;
+            case "Vector3[]":
+                List<Vector3> vector3s = new ArrayList<>();
+                for(Vector3 vector3 : (Vector3[])object) vector3s.add(vector3);
+                return vector3s;
+            case "Vector4[]":
+                List<Vector4> vector4s = new ArrayList<>();
+                for(Vector4 vector4 : (Vector4[])object) vector4s.add(vector4);
+                return vector4s;
+            case "Quaternion[]":
+                List<Quaternion> quaternions = new ArrayList<>();
+                for(Quaternion quaternion : (Quaternion[])object) quaternions.add(quaternion);
+                return quaternions;
+            case "Matrix2[]":
+                List<Matrix2> matrix2s = new ArrayList<>();
+                for(Matrix2 matrix2 : (Matrix2[])object) matrix2s.add(matrix2);
+                return matrix2s;
+            case "Matrix3[]":
+                List<Matrix3> matrix3s = new ArrayList<>();
+                for(Matrix3 matrix3 : (Matrix3[])object) matrix3s.add(matrix3);
+                return matrix3s;
+            case "Matrix4[]":
+                List<Matrix4> matrix4s = new ArrayList<>();
+                for(Matrix4 matrix4 : (Matrix4[])object) matrix4s.add(matrix4);
+                return matrix4s;
         }
 
         return null;

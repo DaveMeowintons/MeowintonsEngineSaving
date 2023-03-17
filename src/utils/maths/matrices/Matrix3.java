@@ -3,9 +3,9 @@ package utils.maths.matrices;
 import utils.maths.vectors.Vector3;
 
 public class Matrix3 {
-    public float m00, m01, m02,
-                 m10, m11, m12,
-                 m20, m21, m22;
+    private float m00, m01, m02,
+                  m10, m11, m12,
+                  m20, m21, m22;
 
     public Matrix3(float m00, float m01, float m02,
                    float m10, float m11, float m12,
