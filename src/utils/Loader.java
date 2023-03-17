@@ -99,17 +99,8 @@ public class Loader {
                     //Get Class from stored list of used component classes with the component ID
                     Class<? extends Component> clazz = manager.getComponents().get((int)componentID);
 
-                    //Get first available constructor for component
-                    Constructor<?> constructor = clazz.getConstructors()[0];
-                    //Create array of Classes to store argument Class types in
-                    Class<?>[] clazzArguments = new Class<?>[constructor.getParameters().length];
-
-                    //Store all Class types into array
-                    for(int i = 0; i < clazzArguments.length; i++)
-                        clazzArguments[i] = constructor.getParameters()[i].getType();
-
                     //Create the component object
-                    Object obj = ReflectionTools.createObject(clazz, clazzArguments);
+                    Object obj = ReflectionTools.createObject(clazz, getClassArguments(clazz));
 
                     //Load all component variables and store them in created component object
                     for(Field f : clazz.getDeclaredFields()){
@@ -137,6 +128,20 @@ public class Loader {
 
         //Update ECS to add all entities into working list
         manager.update(0);
+    }
+
+    private Class<?>[] getClassArguments(Class<?> clazz){
+        //Get first available constructor for component
+        Constructor<?> constructor = clazz.getConstructors()[0];
+        //Create array of Classes to store argument Class types in
+        Class<?>[] clazzArguments = new Class<?>[constructor.getParameters().length];
+
+        //Store all Class types into array
+        for(int i = 0; i < clazzArguments.length; i++)
+            clazzArguments[i] = constructor.getParameters()[i].getType();
+
+        //Return Class argument array
+        return clazzArguments;
     }
 
     /**
