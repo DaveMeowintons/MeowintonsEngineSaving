@@ -24,6 +24,88 @@ public class Matrix3 {
         );
     }
 
+        //Add
+
+        //Sub
+
+        //Mul
+
+    public Matrix3 mul(Matrix3 matrix3, Matrix3 dest){
+        return dest.set(
+                this.m00() * matrix3.m00() + this.m01() * matrix3.m10() + this.m02() * matrix3.m20(),
+                this.m00() * matrix3.m01() + this.m01() * matrix3.m11() + this.m02() * matrix3.m21(),
+                this.m00() * matrix3.m02() + this.m01() * matrix3.m12() + this.m02() * matrix3.m22(),
+                this.m10() * matrix3.m00() + this.m11() * matrix3.m10() + this.m12() * matrix3.m20(),
+                this.m10() * matrix3.m01() + this.m11() * matrix3.m11() + this.m12() * matrix3.m21(),
+                this.m10() * matrix3.m02() + this.m11() * matrix3.m12() + this.m12() * matrix3.m22(),
+                this.m20() * matrix3.m00() + this.m21() * matrix3.m10() + this.m22() * matrix3.m20(),
+                this.m20() * matrix3.m01() + this.m21() * matrix3.m11() + this.m22() * matrix3.m21(),
+                this.m20() * matrix3.m02() + this.m21() * matrix3.m12() + this.m22() * matrix3.m22()
+        );
+    }
+
+    public Matrix3 mul(Matrix3 matrix3){ return this.mul(matrix3, this); }
+
+    public Matrix3 mul(float i, Matrix3 dest){
+        dest.m00 *= i; dest.m01 *= i; dest.m02 *= i;
+        dest.m10 *= i; dest.m11 *= i; dest.m12 *= i;
+        dest.m20 *= i; dest.m21 *= i; dest.m22 *= i;
+        return dest;
+    }
+
+    public Matrix3 mul(float i){ return mul(i, this); }
+
+    public Vector3 mul(Vector3 vector, Vector3 dest, Matrix3 src) {
+        return dest.set(
+                src.m00 * vector.getX() + src.m01 * vector.getY() + src.m02 * vector.getZ(),
+                src.m10 * vector.getX() + src.m11 * vector.getY() + src.m12 * vector.getZ(),
+                src.m20 * vector.getX() + src.m21 * vector.getY() + src.m22 * vector.getZ()
+        );
+    }
+
+    public Vector3 mul(Vector3 vector, Vector3 dest){ return mul(vector, dest, this); }
+
+    public Matrix3 mul(Vector3 s, Matrix3 dest){
+        return dest.set(
+                this.m00 * s.getX(), this.m01 * s.getY(), this.m02 * s.getZ(),
+                this.m10 * s.getX(), this.m11 * s.getY(), this.m12 * s.getZ(),
+                this.m20 * s.getX(), this.m21 * s.getY(), this.m22 * s.getZ()
+        );
+    }
+
+        //Div
+
+        //Transform
+
+    public Matrix3 transform(Vector3 vector3){
+        transform(vector3, vector3);
+
+        return this;
+    }
+
+    public Matrix3 transform(Vector3 vector3, Vector3 result){
+        float x, y, z;
+        x = (m00 * vector3.getX()) + (m01 * vector3.getY()) + (m02 * vector3.getZ());
+        y = (m10 * vector3.getX()) + (m11 * vector3.getY()) + (m12 * vector3.getZ());
+        z = (m20 * vector3.getX()) + (m21 * vector3.getY()) + (m22 * vector3.getZ());
+
+        result.set(x, y, z);
+
+        return this;
+    }
+
+        //Transpose
+
+    public Matrix3 transpose(Matrix3 destination){
+        return destination.set(
+                m00, m10, m20,
+                m01, m11, m21,
+                m02, m12, m22
+        );
+    }
+
+    public Matrix3 transpose(){ return transpose(this); }
+
     /**Getters**/
 
     public float m00(){ return m00; } public float m01(){ return m01; } public float m02(){ return m02; }

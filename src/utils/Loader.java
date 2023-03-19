@@ -3,10 +3,13 @@ package utils;
 import _main.MeshComponent;
 import ecs.ECSManager;
 import ecs.Entity;
+import ecs.Transformation;
 import ecs.components.Component;
 import ecs.components.ComponentSerializer;
 import utils.logging.LogLevel;
 import utils.logging.Logger;
+import utils.maths.matrices.Matrix3;
+import utils.maths.vectors.Vector3;
 import utils.reflection.ReflectionTools;
 import utils.reflection.TSParser;
 import utils.serialisation.dataObjects.*;
@@ -37,6 +40,9 @@ public class Loader {
             TSObject entity = TSObject.Create("Entity");
             //Add entity ID to TSObject
             entity.add(TSField.Long("ID", e.getID()));
+
+            entity.add(TSField.Matrix3("Basis",  e.getTransformation().getBasis()));
+            entity.add(TSField.Vector3("Origin", e.getTransformation().getOrigin()));
 
             //Go through each component in entity to store in database
             for(Component c : e.getComponents().values()){
@@ -86,6 +92,14 @@ public class Loader {
                 TSField eID = object.getFields().get("ID");
                 long entityID = TSDataType.value(eID.getDataType(), eID.getData());
 
+                TSField eBasis = object.getFields().get("Basis");
+                Matrix3 entityBasis = TSDataType.value(eBasis.getDataType(), eBasis.getData());
+
+                TSField eOrigin = object.getFields().get("Origin");
+                Vector3 entityOrigin = TSDataType.value(eOrigin.getDataType(), eOrigin.getData());
+
+                Transformation transformation = new Transformation(entityBasis, entityOrigin);
+
                 List<Component> components = new ArrayList<>();
 
                 //Load components
@@ -122,7 +136,7 @@ public class Loader {
                 }
 
                 //Create entity with correct ID and components
-                manager.loadEntity(new Entity(entityID, components));
+                manager.loadEntity(new Entity(entityID, transformation, components));
             }
         }
 

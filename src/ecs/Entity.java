@@ -7,25 +7,30 @@ import java.util.List;
 
 public class Entity {
     private long id;
+    private Transformation transformation;
     private final Map<Class<? extends Component>, Component> components;
 
-    public Entity(List<Component> components){
+    public Entity(){ this(new Transformation()); }
+
+    public Entity(Transformation transformation, List<Component> components){
+        this.transformation = transformation;
         this.components = new HashMap<>();
         add(components);
     }
 
-    public Entity(Component... components){
+    public Entity(Transformation transformation, Component... components){
+        this.transformation = transformation;
         this.components = new HashMap<>();
         add(components);
     }
 
-    public Entity(long id, Component... components){
-        this(components);
+    public Entity(long id, Transformation transformation, Component... components){
+        this(transformation, components);
         this.id = id;
     }
 
-    public Entity(long id, List<Component> components){
-        this(components);
+    public Entity(long id, Transformation transformation, List<Component> components){
+        this(transformation, components);
         this.id = id;
     }
 
@@ -53,13 +58,16 @@ public class Entity {
 
     /**Getters**/
 
-    public Map<Class<? extends Component>, Component> getComponents(){ return components; }
-
     public long getID(){ return id; }
+
+    public Transformation getTransformation(){ return transformation; }
+    public Map<Class<? extends Component>, Component> getComponents(){ return components; }
 
     /**Setters**/
 
     public void setID(long id){ this.id = id; }
+
+    public void setTransformation(Transformation transformation){ this.transformation = transformation; }
 
     /**String**/
 

@@ -46,14 +46,14 @@ public class ECSManager {
     }
 
     /**Entities**/
-    public Entity createEntity(Component... components){
-        Entity e = new Entity(entityID++, validateComponents(components));
+    public Entity createEntity(Transformation transformation, Component... components){
+        Entity e = new Entity(entityID++, transformation, validateComponents(components));
         entitiesToAdd.add(e);
         return e;
     }
 
-    public Entity createEntity(List<Component> components){
-        Entity e = new Entity(entityID++, validateComponents(components));
+    public Entity createEntity(Transformation transformation, List<Component> components){
+        Entity e = new Entity(entityID++, transformation, validateComponents(components));
         entitiesToAdd.add(e);
         return e;
     }

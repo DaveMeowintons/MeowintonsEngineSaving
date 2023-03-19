@@ -1,6 +1,7 @@
 package _main;
 
 import ecs.ECSManager;
+import ecs.Transformation;
 import utils.Loader;
 import utils.files.readers.TSReader;
 import utils.files.writers.TSWriter;
@@ -26,7 +27,7 @@ public class Main {
 
         ECSManager testManager = new ECSManager();
         testManager.addSystem(new TestSystem());
-        testManager.createEntity(new TestComponent(), new MeshComponent("test"));
+        testManager.createEntity(new Transformation(), new TestComponent(), new MeshComponent("test"));
 
         TSDatabase database = loader.saveECSManagerToDatabase(testManager);
         TSWriter writer = new TSWriter();
